@@ -1,0 +1,13 @@
+install python 3
+install pip
+install Jupyter NB
+--> pip3 install jupyter
+
+
+
+cd C:\Users\dmercier\python_repo\
+jupyter lab
+
+.\venv\Scripts\activate ???
+
+or jupyter notebook
