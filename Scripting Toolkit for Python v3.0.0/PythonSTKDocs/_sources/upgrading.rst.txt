@@ -1,0 +1,146 @@
+.. _upgrading:
+
+
+Upgrading from earlier versions
+*******************************
+
+Breaking changes from previous releases of MI Scripting Toolkit for Python.
+
+Upgrading from MI Scripting Toolkit for Python Version 2.X
+==========================================================
+
+Backwards-incompatible API changes
+----------------------------------
+Scripts written for 2.X versions of MI Scripting Toolkit will need to be modified due to the following breaking changes:
+
+New ``store_password`` option on the :class:`Session` class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Old behavior:** The ``password`` for a :class:`Session` is used to connect to Granta MI once, and cannot be stored.
+
+**New behavior:** The ``password`` assigned to a :class:`Session` can be stored and used multiple times. You must specify whether you want to store the password or not using the ``store_password`` property. If ``store_password`` is missing, bulk operations will fail.
+
+
+:class:`AttributeValue.value` property has been standardized
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 20 40 40
+   :header-rows: 1
+   
+   * - Class
+     - Old (2.X) behavior
+     - New (3.0) behavior
+   * - :class:`AttributePoint`
+     - ``.points`` returns the attribute value or values as a list.
+     - ``.value`` returns ``List[float]`` if the attribute is listed as multi-valued in the schema, and ``float`` if single-valued.
+   * - :class:`AttributeDiscrete`
+     - ``.value`` always returns a list, even when attribute is listed as single-valued in the schema.
+     - ``.value`` returns ``List[str]`` if the attribute is multi-valued, and ``str`` if single-valued.
+   * - :class:`AttributeFunctional`
+     - ``.value`` returns an instance of the class.
+     - ``.value`` returns a list of data values.
+   * - :class:`AttributeTabular`
+     - ``.value`` returns an instance of the class.
+     - ``.value`` returns a list of data values for each column.
+   * - :class:`AttributeHyperlink`
+     - ``.value`` returns an instance of the class.
+     - ``.value`` returns the URL as a string, or ``None`` if no URL has been set.
+   * - :class:`AttributeFile`
+     - ``.value`` returns an instance of the class.
+     - ``.value`` returns binary data as a ``bytes`` object.
+   * - :class:`AttributePicture`
+     - ``.value`` returns an instance of the class.
+     - ``.value`` returns binary data as a ``bytes`` object.
+
+
+Pending deprecations
+--------------------
+We recommend changes to all scripts due to a pending deprecation:
+
+File and Picture ``path`` arguments now include file name
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Old behavior (may not be supported in future releases):** The ``path`` argument for ``File`` and ``Picture`` objects and methods contains the folder path to the file, and the ``file_name`` argument contains the file name and extension.
+
+**New behavior:** The ``path`` argument contains the file path with file name and extension. The ``file_name`` argument is no longer used.
+
+
+Additional changes to Version 2.0 scripts
+-----------------------------------------
+Version 2.0 scripts may need to be modified to take account of these additional breaking changes: 
+
+All search methods now return an empty list when no records are found	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+**Old behavior:** Text and criteria searches returned *None* when no results were found, while other methods returned an empty list.	
+
+**New behavior:** All search methods now return an empty list when no records are found.	
+
+search_for_records_by_text now returns same type at session level and database level 	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+**Old behavior:** At session level, ``search_for_records_by_text`` returned an iterator, due to the potentially large number of results. At the database and table level, it returned a list.	
+
+**New behavior:** ``search_for_records_by_text`` now returns a list in all cases.	
+
+Table.path_from no longer sets the record color unless specified	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+**Old behavior:** ``Table.path_from`` automatically set the color of the records in the path to the default record color when ``color`` was not specified.	
+
+**New behavior:** The color of records in the path is not changed unless ``color`` is explicitly set. 	
+
+Identifying databases by name and dbkey	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+The way that databases are identified when both database ``name`` and ``db_key`` are provided has changed.	
+
+**Old behavior:** if ``name`` and ``db_key`` were provided, the search would stop as soon as a unique name match was made; ``db_key`` was only used if the name search did not produce a single result.	
+
+**New behavior:** if both ``name`` and ``db_key`` are specified, MI Scripting Toolkit will search through the available databases until it finds a database where *both* the name *and* key match.	
+
+Handling of dates	
+^^^^^^^^^^^^^^^^^	
+The way that date-type data is handled has changed. 	
+
+**Old behavior:** dates were handled as strings.
+	
+**New behavior:** dates can be read in as Python's built-in datetime objects (as well as strings), and additionally they return datetime objects.	
+
+Session.search_for_records_where method removed	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+The ``Session.search_for_records_where`` method has been removed.
+
+
+Upgrading from MI Scripting Toolkit for Python Version 1.X
+==========================================================
+
+The Streamlined API in MI Scripting Toolkit 2.0 onwards is designed to make upgrading from 1.X versions of MI Scripting Toolkit as simple as possible.
+
+You do not need to change
+-------------------------
+
+ * How you import the Foundation API library.
+
+ * Use or names of Services or modules.
+
+You do need to change (or check)
+--------------------------------
+
+ * The version of Python you use.
+
+ * Any syntax or commands you are using from Python 2 that have deprecated. `This summary <https://wiki.python.org/moin/Python2orPython3>`_ from Python.org is a good place to start.
+
+ * Any libraries not supported in Python 3.
+
+ * Unicode/byte string encoding when upgrading to Python 3.
+ 
+You may also need to modify your scripts to account for breaking changes in subsequent releases identified above.   
+
+Taking advantage of new features
+--------------------------------
+
+As well as Python 3.5+ functionality such as type hints, automatic use of C accelerators, and memory-efficient list and dict objects, the Streamlined API supports improved productivity with these key features:
+
+ * Pythonic wrappers for request/response classes: write fewer lines of code
+
+ * Optimized for bulk import and export of data
+
+ * Improved user assistance: docstrings, new example Python notebooks, and ``__repr__`` for all classes
+
+You can also get up to speed quickly with our Example Notebooks, and compare them to the equivalent Foundation API Notebooks.

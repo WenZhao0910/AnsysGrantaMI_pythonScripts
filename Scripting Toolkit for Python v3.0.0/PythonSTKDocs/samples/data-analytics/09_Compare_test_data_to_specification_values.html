@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compare test data to specification values &mdash; MI Scripting Toolkit for Python 3.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/Materials.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="next" title="Logging" href="../../log_files.html" />
+    <link rel="prev" title="Fit a non-linear model to series data" href="08_Fit_model_to_series_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/Materials-STK.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">What’s new in Version 3.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../upgrading.html">Upgrading from earlier versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stream_example.html">Streamlined API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../data_analytics.html">Data Analytics Example Notebooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_Create_scatter_plots.html">Create scatter plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_Compare_datasets_graphically.html">Compare datasets graphically</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_Plot_data_by_category.html">Plot data by category</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Fit_series_data_and_import.html">Fit series data and import fit results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_Process_datasets_and_import.html">Process datasets and import results into Granta MI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_Find_area_under_a_curve.html">Find the area under a curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_Calculate_statistics_for_records.html">Calculate statistics for a set of records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_Calculate_statistics_for_functional_attributes.html">Calculate statistics for functional data attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_Fit_model_to_series_data.html">Fit a non-linear model to series data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compare test data to specification values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Connect-to-Granta-MI">Connect to Granta MI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Find-test-data-to-process">Find test data to process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Criteria-1:-Test-data-that-has-not-been-compared-to-a-specification">Criteria 1: Test data that has not been compared to a specification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Criteria-2:-Test-data-with-linked-specifications">Criteria 2: Test data with linked specifications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Compare test data to specification values</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Pre-fetch-the-data">Pre-fetch the data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Comparison-logic">Comparison logic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Compare-the-data">Compare the data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Push-the-results-to-Granta-MI">Push the results to Granta MI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Clean-up-the-database">Clean up the database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MI Scripting Toolkit for Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../data_analytics.html">Data Analytics Example Notebooks</a> &raquo;</li>
+      <li>Compare test data to specification values</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<a href="../../samples\data-analytics\09_Compare_test_data_to_specification_values.ipynb" id='example' type="application/octet-stream" download>
+View the .ipynb file.
+</a><hr class="docutils" />
+<section id="Compare-test-data-to-specification-values">
+<h1>Compare test data to specification values<a class="headerlink" href="#Compare-test-data-to-specification-values" title="Permalink to this headline"></a></h1>
+<p>The following script demonstrates how to compare raw test data to specification values that define acceptable ranges for the test data. In this example, the specification values are stored in a separate record that is linked to the test data.</p>
+<section id="Connect-to-Granta-MI">
+<h2>Connect to Granta MI<a class="headerlink" href="#Connect-to-Granta-MI" title="Permalink to this headline"></a></h2>
+<p>Connect to Granta MI and specify the database and table containing the test results.</p>
+<p>Since this operation is likely to be performed as a batch operation, see the notebook on <a class="reference internal" href="../streamlined/22_Storing_credentials_securely.html"><span class="doc">Storing Credentials Securely</span></a> for more information how to connect to Granta MI securely in a batch Python script.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">GRANTA_MIScriptingToolkit</span> <span class="kn">import</span> <span class="n">granta</span> <span class="k">as</span> <span class="n">mpy</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">mpy</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">autologon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span><span class="s1">&#39;MI Training&#39;</span><span class="p">)</span>
+<span class="n">test_data_table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;Tensile Test Data&#39;</span><span class="p">)</span>
+<span class="n">test_data_table</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Table name: Tensile Test Data, subsets: set()&gt;
+</pre></div></div>
+</div>
+</section>
+<section id="Find-test-data-to-process">
+<h2>Find test data to process<a class="headerlink" href="#Find-test-data-to-process" title="Permalink to this headline"></a></h2>
+<p>Before we start, we need to find the <strong>Test Data</strong> records we want to process by applying the following criteria: 1. The test record has test data which has not previously been compared to a specification. 2. The test record is linked to a specification record.</p>
+<section id="Criteria-1:-Test-data-that-has-not-been-compared-to-a-specification">
+<h3>Criteria 1: Test data that has not been compared to a specification<a class="headerlink" href="#Criteria-1:-Test-data-that-has-not-been-compared-to-a-specification" title="Permalink to this headline"></a></h3>
+<p>First, define the attributes that contain the relevant test data, and the name of the meta-attribute that contains specification comparison results (if they exist). A dictionary is used for test data attributes so they can be mapped to the corresponding specification attributes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">COMPARISON_ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;0.02% Offset yield stress (specification value)&#39;</span><span class="p">:</span> <span class="s1">&#39;0.02% Offset Yield Stress&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;0.2% Offset yield stress (specification value)&#39;</span><span class="p">:</span> <span class="s1">&#39;0.2% Offset Yield Stress&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;Tensile modulus (specification value)&#39;</span><span class="p">:</span> <span class="s2">&quot;Young&#39;s Modulus (11-axis)&quot;</span><span class="p">,</span>
+                         <span class="s1">&#39;Ultimate tensile strength (specification value)&#39;</span><span class="p">:</span> <span class="s2">&quot;Ultimate Tensile Strength&quot;</span><span class="p">,</span>
+                         <span class="p">}</span>
+<span class="n">SPEC_STATUS_META_ATTRIBUTE</span> <span class="o">=</span> <span class="s1">&#39;Specification status&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Next, define an <em>unprocessed records</em> function that takes an attribute name as input and returns the list of records where the attribute is populated, but the meta-attribute is empty.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">def</span> <span class="nf">find_unprocessed_records_for_attribute</span><span class="p">(</span><span class="n">test_attribute_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">mpy</span><span class="o">.</span><span class="n">Record</span><span class="p">]:</span>
+    <span class="n">test_attribute_definition</span> <span class="o">=</span> <span class="n">test_data_table</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">test_attribute_name</span><span class="p">]</span>
+    <span class="n">spec_result_attribute_definition</span> <span class="o">=</span> <span class="n">test_attribute_definition</span><span class="o">.</span><span class="n">meta_attributes</span><span class="p">[</span><span class="n">SPEC_STATUS_META_ATTRIBUTE</span><span class="p">]</span>
+
+    <span class="n">test_result_attribute_has_value</span> <span class="o">=</span> <span class="n">test_attribute_definition</span><span class="o">.</span><span class="n">search_criterion</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">spec_comparison_result_is_empty</span> <span class="o">=</span> <span class="n">spec_result_attribute_definition</span><span class="o">.</span><span class="n">search_criterion</span><span class="p">(</span><span class="n">exists</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">unprocessed_records</span> <span class="o">=</span> <span class="n">test_data_table</span><span class="o">.</span><span class="n">search_for_records_where</span><span class="p">([</span><span class="n">test_result_attribute_has_value</span><span class="p">,</span> <span class="n">spec_comparison_result_is_empty</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">unprocessed_records</span>
+</pre></div>
+</div>
+</div>
+<p>Iterate over each attribute defined in the <code class="docutils literal notranslate"><span class="pre">ATTRIBUTES</span></code> constant to get the previously unprocessed records for each one. Use a dictionary with the <code class="docutils literal notranslate"><span class="pre">record.id</span></code> as the key to ensure you only get unique records (a single record may be missing multiple attributes, and we only want to process each record once).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">unique_unprocessed_records</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">test_attribute</span> <span class="ow">in</span> <span class="n">COMPARISON_ATTRIBUTES</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">unprocessed_records_for_attribute</span> <span class="o">=</span> <span class="n">find_unprocessed_records_for_attribute</span><span class="p">(</span><span class="n">test_attribute</span><span class="p">)</span>
+    <span class="n">unique_unprocessed_records</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">r</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">unprocessed_records_for_attribute</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, extract the <code class="docutils literal notranslate"><span class="pre">record</span></code> values from the <code class="docutils literal notranslate"><span class="pre">dict</span></code> and confirm the number of unprocessed records identified.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">unprocessed_records</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_unprocessed_records</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unprocessed_records</span><span class="p">)</span><span class="si">}</span><span class="s2"> unprocessed records.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+176 unprocessed records.
+</pre></div></div>
+</div>
+</section>
+<section id="Criteria-2:-Test-data-with-linked-specifications">
+<h3>Criteria 2: Test data with linked specifications<a class="headerlink" href="#Criteria-2:-Test-data-with-linked-specifications" title="Permalink to this headline"></a></h3>
+<p>To compare test data to specification values, each unprocessed record must also be linked to a specification record containing those values. Therefore, we need to filter the <code class="docutils literal notranslate"><span class="pre">unprocessed_records</span></code> list to include only those records that have a link to a <strong>Specification Values</strong> record.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">test_data_table.bulk_link_fetch()</span></code> method to improve performance by fetching links for all records in a single operation. The link group name is stored in a constant, since we will need to refer to it later.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">SPEC_LINK_GROUP_NAME</span> <span class="o">=</span> <span class="s1">&#39;Specification Values&#39;</span>
+
+<span class="n">test_data_table</span><span class="o">.</span><span class="n">bulk_link_fetch</span><span class="p">(</span><span class="n">link_groups</span><span class="o">=</span><span class="p">[</span><span class="n">SPEC_LINK_GROUP_NAME</span><span class="p">],</span> <span class="n">records</span><span class="o">=</span><span class="n">unprocessed_records</span><span class="p">)</span>
+<span class="n">records_to_process</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">unprocessed_records</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="n">SPEC_LINK_GROUP_NAME</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">records_to_process</span><span class="p">)</span><span class="si">}</span><span class="s2"> unprocessed records with links to specifications.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6 unprocessed records with links to specifications.
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2>Compare test data to specification values<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<p>Now check each record in the <code class="docutils literal notranslate"><span class="pre">records_to_process</span></code> list against its linked specification.</p>
+<section id="Pre-fetch-the-data">
+<h3>Pre-fetch the data<a class="headerlink" href="#Pre-fetch-the-data" title="Permalink to this headline"></a></h3>
+<p>First, pre-fetch all the attributes in the <em>Specification Values</em> and <em>Tensile Test Data</em> tables that are required for the analysis. (This step is optional, but helps improve performance for large datasets.)</p>
+<p>Pre-fetching data using the <code class="docutils literal notranslate"><span class="pre">bulk_fetch()</span></code> operation generally requires three types of objects: a list of attributes, a list of records, and the table to fetch the data from.</p>
+<p>For the test data, we already have the <code class="docutils literal notranslate"><span class="pre">test_data_table</span></code> object and the list of records. However, we need to construct the list of attributes. We want to export the following: - The <em>Specimen ID</em> attribute, used for printing status information while performing the comparison - The list of test data attributes defined as values in the <code class="docutils literal notranslate"><span class="pre">COMPARISON_ATTRIBUTES</span></code> dictionary - The <em>Specification Status</em> meta-attribute</p>
+<p>The cell below builds this list of attributes, and then uses <code class="docutils literal notranslate"><span class="pre">bulk_fetch()</span></code> to fetch the data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">SPECIMEN_ID_ATTRIBUTE</span> <span class="o">=</span> <span class="s1">&#39;Specimen ID&#39;</span>
+<span class="n">specimen_id_attribute_object</span> <span class="o">=</span> <span class="n">test_data_table</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">SPECIMEN_ID_ATTRIBUTE</span><span class="p">]</span>
+<span class="n">test_data_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">specimen_id_attribute_object</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">attribute_name</span> <span class="ow">in</span> <span class="n">COMPARISON_ATTRIBUTES</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">attribute</span> <span class="o">=</span> <span class="n">test_data_table</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span>
+    <span class="n">meta_attribute</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">meta_attributes</span><span class="p">[</span><span class="n">SPEC_STATUS_META_ATTRIBUTE</span><span class="p">]</span>
+    <span class="n">test_data_attributes</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">attribute</span><span class="p">,</span> <span class="n">meta_attribute</span><span class="p">])</span>
+
+<span class="n">test_data_table</span><span class="o">.</span><span class="n">bulk_fetch</span><span class="p">(</span><span class="n">records</span><span class="o">=</span><span class="n">records_to_process</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">test_data_attributes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bulk fetched </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_data_attributes</span><span class="p">)</span><span class="si">}</span><span class="s2"> attributes across </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">records_to_process</span><span class="p">)</span><span class="si">}</span><span class="s2"> records&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Bulk fetched 9 attributes across 6 records
+</pre></div></div>
+</div>
+<p>For the specification values we know the attributes we need, but we do not have a list of records or a table object. The following steps must be performed: 1. Create a single flat list of all linked specification records. Use a <code class="docutils literal notranslate"><span class="pre">set</span></code> as the intermediary container to only include unique records. 2. Extract the table name from one of the specification records and create a <code class="docutils literal notranslate"><span class="pre">specification_table</span></code> object. 3. Use the <code class="docutils literal notranslate"><span class="pre">specification_table</span></code> object to bulk fetch the data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Step 1: Generate a single list of unique linked specification records</span>
+<span class="n">spec_records</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">records_to_process</span><span class="p">:</span>
+    <span class="n">spec_records</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="n">SPEC_LINK_GROUP_NAME</span><span class="p">])</span>
+<span class="n">spec_records</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">spec_records</span><span class="p">)</span>
+
+<span class="c1"># Step 2: Get the specification table object</span>
+<span class="n">specification_table_name</span> <span class="o">=</span> <span class="n">spec_records</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">table_name</span>
+<span class="n">specification_table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="n">specification_table_name</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Bulk fetch the data</span>
+<span class="n">specification_data_attributes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">COMPARISON_ATTRIBUTES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">specification_table</span><span class="o">.</span><span class="n">bulk_fetch</span><span class="p">(</span><span class="n">records</span><span class="o">=</span><span class="n">spec_records</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">specification_data_attributes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fetched </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">specification_data_attributes</span><span class="p">)</span><span class="si">}</span><span class="s2"> attributes across </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">spec_records</span><span class="p">)</span><span class="si">}</span><span class="s2"> records&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fetched 4 attributes across 1 records
+</pre></div></div>
+</div>
+</section>
+<section id="Comparison-logic">
+<h3>Comparison logic<a class="headerlink" href="#Comparison-logic" title="Permalink to this headline"></a></h3>
+<p>Next, write a function that compares the test data attribute and the specification attribute and returns the result as a string. This function includes an initial check to ensure values exist for both attributes. If either attribute does not have a value, return <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span> <span class="nf">compare_test_to_spec</span><span class="p">(</span><span class="n">test_attribute</span><span class="p">:</span> <span class="n">mpy</span><span class="o">.</span><span class="n">AttributePoint</span><span class="p">,</span> <span class="n">spec_attribute</span><span class="p">:</span> <span class="n">mpy</span><span class="o">.</span><span class="n">AttributePoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">test_attribute</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span> <span class="ow">or</span> <span class="n">spec_attribute</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">test_value</span> <span class="o">=</span> <span class="n">test_attribute</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">low_spec_value</span> <span class="o">=</span> <span class="n">spec_attribute</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)</span>
+    <span class="n">high_spec_value</span> <span class="o">=</span> <span class="n">spec_attribute</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;high&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">low_spec_value</span> <span class="o">&lt;=</span> <span class="n">test_value</span> <span class="o">&lt;=</span> <span class="n">high_spec_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Test meets specification&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Test does not meet specification&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Compare-the-data">
+<h3>Compare the data<a class="headerlink" href="#Compare-the-data" title="Permalink to this headline"></a></h3>
+<p>Finally, iterate over all records in the <code class="docutils literal notranslate"><span class="pre">records_to_process</span></code> list and all attributes in the <code class="docutils literal notranslate"><span class="pre">COMPARISON_ATTRIBUTES</span></code> constant. For each combination of record and attribute, call the function defined above and store the result in the <em>Specification Status</em> meta-attribute. The comparison is skipped if the meta-attribute is already populated.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">records_to_update</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">test_record</span> <span class="ow">in</span> <span class="n">records_to_process</span><span class="p">:</span>
+    <span class="n">test_specimen_id</span> <span class="o">=</span> <span class="n">test_record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">SPECIMEN_ID_ATTRIBUTE</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_specimen_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">spec_record</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">test_record</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="n">SPEC_LINK_GROUP_NAME</span><span class="p">]))</span>
+    <span class="n">modified_attributes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">spec_attribute_name</span><span class="p">,</span> <span class="n">test_attribute_name</span> <span class="ow">in</span> <span class="n">COMPARISON_ATTRIBUTES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">test_attribute</span> <span class="o">=</span> <span class="n">test_record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">test_attribute_name</span><span class="p">]</span>
+        <span class="n">spec_status_meta_attribute</span> <span class="o">=</span> <span class="n">test_attribute</span><span class="o">.</span><span class="n">meta_attributes</span><span class="p">[</span><span class="n">SPEC_STATUS_META_ATTRIBUTE</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">spec_status_meta_attribute</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">test_attribute_name</span><span class="si">}</span><span class="s2"> skipped: &lt;Already populated&gt;&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">spec_attribute</span> <span class="o">=</span> <span class="n">spec_record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">spec_attribute_name</span><span class="p">]</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">compare_test_to_spec</span><span class="p">(</span><span class="n">test_attribute</span><span class="p">,</span> <span class="n">spec_attribute</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">test_attribute_name</span><span class="si">}</span><span class="s2"> skipped: &lt;No data&gt;&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">test_attribute_name</span><span class="si">}</span><span class="s2"> result: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">spec_status_meta_attribute</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="n">modified_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spec_status_meta_attribute</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">modified_attributes</span><span class="p">:</span>
+        <span class="n">test_record</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">(</span><span class="n">modified_attributes</span><span class="p">)</span>
+        <span class="n">records_to_update</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_record</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MTS-615766
+ - 0.02% Offset Yield Stress result: Test meets specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test does not meet specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+MTS-615726
+ - 0.02% Offset Yield Stress result: Test does not meet specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test meets specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+MTS-615746
+ - 0.02% Offset Yield Stress result: Test meets specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test meets specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+MTS-615756
+ - 0.02% Offset Yield Stress result: Test meets specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test meets specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+MTS-615736
+ - 0.02% Offset Yield Stress result: Test does not meet specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test meets specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+MTS-615776
+ - 0.02% Offset Yield Stress result: Test meets specification
+ - 0.2% Offset Yield Stress skipped: &lt;No data&gt;
+ - Young&#39;s Modulus (11-axis) result: Test does not meet specification
+ - Ultimate Tensile Strength skipped: &lt;No data&gt;
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Push-the-results-to-Granta-MI">
+<h2>Push the results to Granta MI<a class="headerlink" href="#Push-the-results-to-Granta-MI" title="Permalink to this headline"></a></h2>
+<p>The final step is to update the processed records in Granta MI. Once the cell below has completed, click the link to view the results in MI Viewer.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">if</span> <span class="n">records_to_update</span><span class="p">:</span>
+    <span class="n">modified_records</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">records_to_update</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">modified_records</span><span class="p">)</span><span class="si">}</span><span class="s2"> records modified. Links to the MI Viewer datasheets are provided below.&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">modified_record</span> <span class="ow">in</span> <span class="n">modified_records</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">modified_record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">SPECIMEN_ID_ATTRIBUTE</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;: </span><span class="si">{</span><span class="n">modified_record</span><span class="o">.</span><span class="n">viewer_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No records modified&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6 records modified. Links to the MI Viewer datasheets are provided below.
+MTS-615766: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=fdd81e11-bcdd-4ed3-bf37-6ed12f7e2162
+MTS-615726: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=6bcb5814-9ff5-4df1-8c92-984474d4ca74
+MTS-615746: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=c0130467-8847-4e22-aab2-d5ca2b6308fd
+MTS-615756: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=d8cf380b-b48e-43b2-be5b-d150415f3691
+MTS-615736: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=d2d7b359-49d4-4028-b75c-1a79ccb56892
+MTS-615776: http://localhost/mi/datasheet.aspx?dbKey=MI_Training&amp;recordHistoryGuid=d5c2f875-7822-44dc-88b3-ffdf22f7a60f
+</pre></div></div>
+</div>
+</section>
+<section id="Clean-up-the-database">
+<h2>Clean up the database<a class="headerlink" href="#Clean-up-the-database" title="Permalink to this headline"></a></h2>
+<p>Uncomment the bottom line and run this cell to revert the changes made in this script. This is useful if you wish to run the script again.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records_to_process</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">test_attribute</span> <span class="ow">in</span> <span class="n">COMPARISON_ATTRIBUTES</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">spec_attr</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">test_attribute</span><span class="p">]</span><span class="o">.</span><span class="n">meta_attributes</span><span class="p">[</span><span class="n">SPEC_STATUS_META_ATTRIBUTE</span><span class="p">]</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">clear_attributes</span><span class="p">([</span><span class="n">spec_attr</span><span class="p">])</span>
+<span class="c1"># s.update(records_to_process)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="08_Fit_model_to_series_data.html" class="btn btn-neutral float-left" title="Fit a non-linear model to series data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../log_files.html" class="btn btn-neutral float-right" title="Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../../copyright.html">Copyright</a> 2022 ANSYS, Inc. or its affiliated companies. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

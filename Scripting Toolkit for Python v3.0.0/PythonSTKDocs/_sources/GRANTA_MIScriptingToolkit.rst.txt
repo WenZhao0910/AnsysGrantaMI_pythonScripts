@@ -1,0 +1,1802 @@
+Foundation API Reference
+========================
+
+Services Reference
+##################
+
+.. _browse-service:
+
+BrowseService
+-------------
+
+.. autoclass:: GRANTA_MIScriptingToolkit.BrowseService.BrowseService
+   :members:
+
+.. _search-service:
+
+SearchService
+-------------
+
+.. autoclass:: GRANTA_MIScriptingToolkit.SearchService.SearchService
+   :members:
+   
+.. _data-import-service:
+
+DataImportService
+-----------------
+
+.. autoclass:: GRANTA_MIScriptingToolkit.DataImportService.DataImportService
+   :members:
+   
+.. _data-export-service:
+
+DataExportService
+-----------------
+
+.. autoclass:: GRANTA_MIScriptingToolkit.DataExportService.DataExportService
+   :members:
+   
+.. _engineering-data-service:
+
+EngineeringDataService
+----------------------
+
+.. autoclass:: GRANTA_MIScriptingToolkit.EngineeringDataService.EngineeringDataService
+   :members:
+   
+
+Objects Reference
+#################
+
+AssociatedRecords
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AssociatedRecords
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeAddress
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeAddress
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeCategory
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeCategory
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeDetail
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeExporterParameters
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeExporterParameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeMetaAttributes
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeMetaAttributes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeReference
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+AttributeValue
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.AttributeValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BetweenDateTimesSearchValue
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.BetweenDateTimesSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BetweenSearchValue
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.BetweenSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BinaryDataSettings
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.BinaryDataSettings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+BrowseService
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.BrowseService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+CategoryAttributeDetail
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.CategoryAttributeDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Constraint
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Constraint
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Constraints
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Constraints
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ContainsAllSearchValue
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ContainsAllSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ContainsAnySearchValue
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ContainsAnySearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ContainsSearchValue
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ContainsSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+CriteriaSearch
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.CriteriaSearch
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataExportService
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DataExportService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DataImportService
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DataImportService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DatabaseDetail
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DatabaseDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DateDataType
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DateDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DeleteOrWithdrawIfLatestRecordVersionRequest
+--------------------------------------------
+.. automodule:: GRANTA_MIScriptingToolkit.DeleteOrWithdrawIfLatestRecordVersionRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DeleteOrWithdrawIfLatestRecordVersionResponse
+---------------------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DeleteOrWithdrawIfLatestRecordVersionResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DeleteOrWithdrawRecord
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DeleteOrWithdrawRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DiscreteDataType
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DiscreteDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DiscreteValue
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DiscreteValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DoesNotContainSearchValue
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DoesNotContainSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+DoesNotExistSearchValue
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.DoesNotExistSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+EngineeringDataService
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.EngineeringDataService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+EnsureRecordFolderPathsRequest
+------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.EnsureRecordFolderPathsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+EnsureRecordFolderPathsResponse
+-------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.EnsureRecordFolderPathsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExactlySearchValue
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExactlySearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExistsSearchValue
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExistsSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportRecordDataRequest
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportRecordDataRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportRecordDataResponse
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportRecordDataResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportedAttribute
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportedAttribute
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Exporter
+--------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Exporter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExporterParameter
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExporterParameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExporterPopulation
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExporterPopulation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExporterTransform
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExporterTransform
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportersForRecord
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportersForRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportersForRecordsRequest
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportersForRecordsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ExportersForRecordsResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ExportersForRecordsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FileDataType
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FileDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalGraph
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalGraph
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalGriddedDataType
+------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalGriddedDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalPointValue
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalPointValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalRangeValue
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalRangeValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalSeriesDataType
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalSeriesDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalSeriesGraph
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalSeriesGraph
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FloatFunctionalValues
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FloatFunctionalValues
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+FunctionalDataSettings
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.FunctionalDataSettings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GRANTA\_Constants
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GRANTA_Constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GRANTA\_Exceptions
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GRANTA_Exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GRANTA\_Logging
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GRANTA_Logging
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GRANTA\_MISession
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GRANTA_MISession
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAssociatedRecordsRequest
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAssociatedRecordsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAssociatedRecordsResponse
+----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAssociatedRecordsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAttributeDetailsRequest
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAttributeDetailsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAttributeDetailsResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAttributeDetailsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAttributeParametersRequest
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAttributeParametersRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAttributeParametersResponse
+------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAttributeParametersResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAvailableExportersRequest
+----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAvailableExportersRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetAvailableExportersResponse
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetAvailableExportersResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetChildNodes
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetChildNodes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetChildNodesResponse
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetChildNodesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetDatabaseParameters
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetDatabaseParameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetDatabaseParametersResponse
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetDatabaseParametersResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetDatabasesResponse
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetDatabasesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetExporterParametersRequest
+----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetExporterParametersRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetExporterParametersResponse
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetExporterParametersResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetIntegrationProfiles
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetIntegrationProfiles
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetIntegrationProfilesResponse
+------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetIntegrationProfilesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetLayouts
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetLayouts
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetLayoutsResponse
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetLayoutsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetLinkedRecordsRequest
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetLinkedRecordsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetLinkedRecordsResponse
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetLinkedRecordsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetMetaAttributesRequest
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetMetaAttributesRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetMetaAttributesResponse
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetMetaAttributesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetParameterDetailsRequest
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetParameterDetailsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetParameterDetailsResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetParameterDetailsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordAttributesByRefRequest
+-------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordAttributesByRefRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordAttributesByRefResponse
+--------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordAttributesByRefResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordAttributesRequest
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordAttributesRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordAttributesResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordAttributesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordLinkGroups
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordLinkGroups
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordLinkGroupsResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordLinkGroupsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordVersionsRequest
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordVersionsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRecordVersionsResponse
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRecordVersionsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRootNode
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRootNode
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetRootNodeResponse
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetRootNodeResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetSubsetsRequest
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetSubsetsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetSubsetsResponse
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetSubsetsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetTables
+---------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetTables
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetTablesResponse
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetTablesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetTreeRecordsRequest
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetTreeRecordsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetTreeRecordsResponse
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetTreeRecordsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUnitConversionsRequest
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUnitConversionsRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUnitConversionsResponse
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUnitConversionsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUnitSystems
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUnitSystems
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUnitSystemsResponse
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUnitSystemsResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUploadAddressesRequest
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUploadAddressesRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GetUploadAddressesResponse
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GetUploadAddressesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GraphDomain
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GraphDomain
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+GreaterThanSearchValue
+----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.GreaterThanSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+HelpInfo
+--------
+
+.. automodule:: GRANTA_MIScriptingToolkit.HelpInfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+HighEndSearchValue
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.HighEndSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+HyperlinkDataType
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.HyperlinkDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IDataValue
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.IDataValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ImportAttributeValue
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ImportAttributeValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ImportRecord
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ImportRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IntegerDataType
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.IntegerDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IntegrationDatabase
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.IntegrationDatabase
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IntegrationProfileDetail
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.IntegrationProfileDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+IntegrationProfileReference
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.IntegrationProfileReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LayoutDetail
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LayoutDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LayoutReference
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LayoutReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LessThanSearchValue
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LessThanSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LinkAllCombinations
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LinkAllCombinations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LinkRecords
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LinkRecords
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LinkedRecordsDataType
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LinkedRecordsDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ListDataType
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ListDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ListItem
+--------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ListItem
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LogicalDataType
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LogicalDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LongTextDataType
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LongTextDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LookupValue
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LookupValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+LowEndSearchValue
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.LowEndSearchValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MIDatabase
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MIDatabase
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MIEntityReference
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MIEntityReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MIEntityResolution
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MIEntityResolution
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MIParameterValue
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MIParameterValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MISession
+---------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MISession
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MinMax
+------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MinMax
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+MinMaxValue
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.MinMaxValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ModifyRecordLinksRequest
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ModifyRecordLinksRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ModifyRecordLinksResponse
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ModifyRecordLinksResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NamedAttribute
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NamedAttribute
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NamedLayout
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NamedLayout
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NamedRecord
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NamedRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NamedSubset
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NamedSubset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NamedTargetedSourceRecord
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NamedTargetedSourceRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NotatedTargetRecord
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NotatedTargetRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+NotatedTargetedSourceRecord
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.NotatedTargetedSourceRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+OIDC
+----
+
+.. automodule:: GRANTA_MIScriptingToolkit.OIDC
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterDetail
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterDomain
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterDomain
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterInformation
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterInformation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterReference
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterReferenceAndValue
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterReferenceAndValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterReferencesAndValues
+----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterReferencesAndValues
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ParameterValue
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ParameterValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Parameters
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Parameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PartialTableReference
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.PartialTableReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PathLeaf
+--------
+
+.. automodule:: GRANTA_MIScriptingToolkit.PathLeaf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PictureDataType
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.PictureDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PointDataType
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.PointDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+PointValueWithParameters
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.PointValueWithParameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RangeDataType
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RangeDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RasterSize
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RasterSize
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordAttribute
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordAttribute
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordData
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordData
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordExporterParameters
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordExporterParameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordFilter
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordFilter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordFolderPath
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordFolderPath
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordLinkChanges
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordLinkChanges
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordLinkGroup
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordLinkGroup
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordLinkGroupDetail
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordLinkGroupDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordLinkGroupReference
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordLinkGroupReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordLinkModifications
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordLinkModifications
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordNameSearchRequest
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordNameSearchRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordReference
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordSearchCriterion
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordSearchCriterion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordVersionState
+------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordVersionState
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RecordWithAttributeAddresses
+----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RecordWithAttributeAddresses
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ResolveReferencesRequest
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ResolveReferencesRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ResolveReferencesResponse
+-------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ResolveReferencesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RevisionInfo
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RevisionInfo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+RichText
+--------
+
+.. automodule:: GRANTA_MIScriptingToolkit.RichText
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SearchResult
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SearchResult
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SearchService
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SearchService
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Series
+------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Series
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Service
+-------
+
+.. automodule:: GRANTA_MIScriptingToolkit.Service
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ServiceLayerResponse
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ServiceLayerResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SetRecordAttributesRequest
+--------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SetRecordAttributesRequest
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SetRecordAttributesResponse
+---------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SetRecordAttributesResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ShortTextDataType
+-----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.ShortTextDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SimpleTextSearch
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SimpleTextSearch
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SimpleTextSearchResponse
+------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SimpleTextSearchResponse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SourceRecord
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SourceRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SourceUnitConversionSet
+-----------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SourceUnitConversionSet
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SpecificUnitConversionContext
+-----------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SpecificUnitConversionContext
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+StringUtils
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.StringUtils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SubsetDetail
+------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SubsetDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SubsetReference
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SubsetReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+SubsetsDataType
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.SubsetsDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TableDetail
+-----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TableDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TableReference
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TableReference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularColumn
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularColumn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularColumnDetail
+-------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularColumnDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularDataCell
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularDataCell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularDataRow
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularDataRow
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularDataType
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularDataType
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TabularDetail
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TabularDetail
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TargetedSourceRecord
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TargetedSourceRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+TreeRecord
+----------
+
+.. automodule:: GRANTA_MIScriptingToolkit.TreeRecord
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnitConversion
+--------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnitConversion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnitConversionContext
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnitConversionContext
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnitConversionContextConversionSet
+----------------------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnitConversionContextConversionSet
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnitConversionTarget
+--------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnitConversionTarget
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnitInformation
+---------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnitInformation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnittedParameterValue
+---------------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnittedParameterValue
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnlinkAllRecords
+----------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnlinkAllRecords
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+UnlinkRecords
+-------------
+
+.. automodule:: GRANTA_MIScriptingToolkit.UnlinkRecords
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+XYData
+------
+
+.. automodule:: GRANTA_MIScriptingToolkit.XYData
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+XYPoint
+-------
+
+.. automodule:: GRANTA_MIScriptingToolkit.XYPoint
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+XYRange
+-------
+
+.. automodule:: GRANTA_MIScriptingToolkit.XYRange
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. Module contents
+.. ---------------
+.. 
+.. .. automodule:: GRANTA_MIScriptingToolkit
+..    :members:
+..    :undoc-members:
+..    :show-inheritance:
+
