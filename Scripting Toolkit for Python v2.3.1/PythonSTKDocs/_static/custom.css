@@ -1,0 +1,26 @@
+.wy-nav-content {
+   max-width: none;
+}
+/* adds scrollbar to sidenav */
+.wy-side-scroll {
+  width: auto;
+  overflow-y: auto;
+}
+
+.wy-nav-top {
+      background: #565555;
+}
+
+.wy-side-nav-search {
+      background: #565555;
+}
+/* Sidebar */
+.wy-nav-side {
+      background: #565555;
+}
+
+.wy-form {
+      display: inline-block;
+      width: 95%;
+      padding-right: 5px;
+}

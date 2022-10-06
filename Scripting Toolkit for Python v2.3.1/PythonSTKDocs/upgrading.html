@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Upgrading from earlier versions &mdash; MI Scripting Toolkit for Python 2.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/Materials.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Streamlined API Example Notebooks" href="stream_example.html" />
+    <link rel="prev" title="What’s new in Version 2.3" href="release_notes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/Materials-STK.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">What’s new in Version 2.3</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrading from earlier versions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-2">Upgrading from MI Scripting Toolkit for Python Version 2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-and-picture-path-arguments-now-include-file-name">File and Picture <code class="docutils literal notranslate"><span class="pre">path</span></code> arguments now include file name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-1">Upgrading from MI Scripting Toolkit for Python Version 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-0">Upgrading from MI Scripting Toolkit for Python Version 2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#all-search-methods-now-return-an-empty-list-when-no-records-are-found">All search methods now return an empty list when no records are found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search-for-records-by-text-now-returns-same-type-at-session-level-and-database-level">search_for_records_by_text now returns same type at session level and database level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-path-from-no-longer-sets-the-record-color-unless-specified">Table.path_from no longer sets the record color unless specified</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identifying-databases-by-name-and-dbkey">Identifying databases by name and dbkey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#handling-of-dates">Handling of dates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#session-search-for-records-where-method-removed">Session.search_for_records_where method removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-mi-scripting-toolkit-for-python-version-1-x">Upgrading from MI Scripting Toolkit for Python Version 1.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#you-do-not-need-to-change">You do not need to change</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#you-do-need-to-change-or-check">You do need to change (or check)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#taking-advantage-of-new-2-x-features">Taking advantage of new 2.X features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stream_example.html">Streamlined API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analytics.html">Data Analytics Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MI Scripting Toolkit for Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Upgrading from earlier versions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="upgrading-from-earlier-versions">
+<span id="upgrading"></span><h1>Upgrading from earlier versions<a class="headerlink" href="#upgrading-from-earlier-versions" title="Permalink to this headline">¶</a></h1>
+<p>Breaking changes from previous releases of MI Scripting Toolkit for Python.</p>
+<div class="section" id="upgrading-from-mi-scripting-toolkit-for-python-version-2-2">
+<h2>Upgrading from MI Scripting Toolkit for Python Version 2.2<a class="headerlink" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-2" title="Permalink to this headline">¶</a></h2>
+<p>No known changes are required to scripts from Version 2.2, but we recommend changes due to a pending deprecation:</p>
+<div class="section" id="file-and-picture-path-arguments-now-include-file-name">
+<h3>File and Picture <code class="docutils literal notranslate"><span class="pre">path</span></code> arguments now include file name<a class="headerlink" href="#file-and-picture-path-arguments-now-include-file-name" title="Permalink to this headline">¶</a></h3>
+<p><strong>Old behavior (may not be supported in future releases):</strong> The <code class="docutils literal notranslate"><span class="pre">path</span></code> argument for <code class="docutils literal notranslate"><span class="pre">File</span></code> and <code class="docutils literal notranslate"><span class="pre">Picture</span></code> objects and methods contains the folder path to the file, and the <code class="docutils literal notranslate"><span class="pre">file_name</span></code> argument contains the file name and extension.</p>
+<p><strong>New behavior:</strong> The <code class="docutils literal notranslate"><span class="pre">path</span></code> argument contains the file path with file name and extension. The <code class="docutils literal notranslate"><span class="pre">file_name</span></code> argument is no longer used.</p>
+</div>
+</div>
+<div class="section" id="upgrading-from-mi-scripting-toolkit-for-python-version-2-1">
+<h2>Upgrading from MI Scripting Toolkit for Python Version 2.1<a class="headerlink" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-1" title="Permalink to this headline">¶</a></h2>
+<p>No known changes are required to scripts from Version 2.1.</p>
+</div>
+<div class="section" id="upgrading-from-mi-scripting-toolkit-for-python-version-2-0">
+<h2>Upgrading from MI Scripting Toolkit for Python Version 2.0<a class="headerlink" href="#upgrading-from-mi-scripting-toolkit-for-python-version-2-0" title="Permalink to this headline">¶</a></h2>
+<p>Version 2.0 scripts may need to be modified to take account of the breaking changes identified below.</p>
+<div class="section" id="all-search-methods-now-return-an-empty-list-when-no-records-are-found">
+<h3>All search methods now return an empty list when no records are found<a class="headerlink" href="#all-search-methods-now-return-an-empty-list-when-no-records-are-found" title="Permalink to this headline">¶</a></h3>
+<p><strong>Old behavior:</strong> Text and criteria searches returned <em>None</em> when no results were found, while other methods returned an empty list.</p>
+<p><strong>New behavior:</strong> All search methods now return an empty list when no records are found.</p>
+</div>
+<div class="section" id="search-for-records-by-text-now-returns-same-type-at-session-level-and-database-level">
+<h3>search_for_records_by_text now returns same type at session level and database level<a class="headerlink" href="#search-for-records-by-text-now-returns-same-type-at-session-level-and-database-level" title="Permalink to this headline">¶</a></h3>
+<p><strong>Old behavior:</strong> At session level, <code class="docutils literal notranslate"><span class="pre">search_for_records_by_text</span></code> returned an iterator, due to the potentially large number of results. At the database and table level, it returned a list.</p>
+<p><strong>New behavior:</strong> <code class="docutils literal notranslate"><span class="pre">search_for_records_by_text</span></code> now returns a list in all cases.</p>
+</div>
+<div class="section" id="table-path-from-no-longer-sets-the-record-color-unless-specified">
+<h3>Table.path_from no longer sets the record color unless specified<a class="headerlink" href="#table-path-from-no-longer-sets-the-record-color-unless-specified" title="Permalink to this headline">¶</a></h3>
+<p><strong>Old behavior:</strong> <code class="docutils literal notranslate"><span class="pre">Table.path_from</span></code> automatically set the color of the records in the path to the default record color when <code class="docutils literal notranslate"><span class="pre">color</span></code> was not specified.</p>
+<p><strong>New behavior:</strong> The color of records in the path is not changed unless <code class="docutils literal notranslate"><span class="pre">color</span></code> is explicitly set.</p>
+</div>
+<div class="section" id="identifying-databases-by-name-and-dbkey">
+<h3>Identifying databases by name and dbkey<a class="headerlink" href="#identifying-databases-by-name-and-dbkey" title="Permalink to this headline">¶</a></h3>
+<p>The way that databases are identified when both database <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">db_key</span></code> are provided has changed.</p>
+<p><strong>Old behavior:</strong> if <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">db_key</span></code> were provided, the search would stop as soon as a unique name match was made; <code class="docutils literal notranslate"><span class="pre">db_key</span></code> was only used if the name search did not produce a single result.</p>
+<p><strong>New behavior:</strong> if both <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">db_key</span></code> are specified, MI Scripting Toolkit will search through the available databases until it finds a database where <em>both</em> the name <em>and</em> key match.</p>
+</div>
+<div class="section" id="handling-of-dates">
+<h3>Handling of dates<a class="headerlink" href="#handling-of-dates" title="Permalink to this headline">¶</a></h3>
+<p>The way that date-type data is handled has changed.</p>
+<p><strong>Old behavior:</strong> dates were handled as strings.
+<strong>New behavior:</strong> dates can be read in as Python’s built-in datetime objects (as well as strings), and additionally they return datetime objects.</p>
+</div>
+<div class="section" id="session-search-for-records-where-method-removed">
+<h3>Session.search_for_records_where method removed<a class="headerlink" href="#session-search-for-records-where-method-removed" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Session.search_for_records_where</span></code> method has been removed.</p>
+</div>
+</div>
+<div class="section" id="upgrading-from-mi-scripting-toolkit-for-python-version-1-x">
+<h2>Upgrading from MI Scripting Toolkit for Python Version 1.X<a class="headerlink" href="#upgrading-from-mi-scripting-toolkit-for-python-version-1-x" title="Permalink to this headline">¶</a></h2>
+<p>The Streamlined API in MI Scripting Toolkit 2.X is designed to make upgrading from 1.X versions of MI Scripting Toolkit as simple as possible.</p>
+<div class="section" id="you-do-not-need-to-change">
+<h3>You do not need to change<a class="headerlink" href="#you-do-not-need-to-change" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>How you import the Foundation API library.</p></li>
+<li><p>Use or names of Services or modules.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="you-do-need-to-change-or-check">
+<h3>You do need to change (or check)<a class="headerlink" href="#you-do-need-to-change-or-check" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>The version of Python you use.</p></li>
+<li><p>Any syntax or commands you are using from Python 2 that have deprecated. <a class="reference external" href="https://wiki.python.org/moin/Python2orPython3">This summary</a> from Python.org is a good place to start.</p></li>
+<li><p>Any libraries not supported in Python 3.</p></li>
+<li><p>Unicode/byte string encoding when upgrading to Python 3.</p></li>
+</ul>
+</div></blockquote>
+<p>You may also need to modify your scripts to account for breaking changes in subsequent 2.X releases identified above.</p>
+</div>
+<div class="section" id="taking-advantage-of-new-2-x-features">
+<h3>Taking advantage of new 2.X features<a class="headerlink" href="#taking-advantage-of-new-2-x-features" title="Permalink to this headline">¶</a></h3>
+<p>As well as Python 3.5+ functionality such as type hints, automatic use of C accelerators, and memory-efficient list and dict objects, the Streamlined API supports improved productivity with these key features:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Pythonic wrappers for request/response classes: write fewer lines of code</p></li>
+<li><p>Optimized for bulk import and export of data</p></li>
+<li><p>Improved user assistance: docstrings, new example Python notebooks, and <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> for all classes</p></li>
+</ul>
+</div></blockquote>
+<p>You can also get up to speed quickly with our Example Notebooks, and compare them to the equivalent Foundation API Notebooks.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="stream_example.html" class="btn btn-neutral float-right" title="Streamlined API Example Notebooks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="release_notes.html" class="btn btn-neutral float-left" title="What’s new in Version 2.3" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; <a href="copyright.html">Copyright</a> 2021 ANSYS, Inc. or its affiliated companies. All rights reserved.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

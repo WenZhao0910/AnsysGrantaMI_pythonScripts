@@ -1,0 +1,369 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Layouts\n",
+    "\n",
+    "This notebook shows how to access layouts through the Streamlined API."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Connect to Granta MI"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:53:35.526422Z",
+     "iopub.status.busy": "2021-07-15T09:53:35.525423Z",
+     "iopub.status.idle": "2021-07-15T09:53:36.377191Z",
+     "shell.execute_reply": "2021-07-15T09:53:36.377191Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from GRANTA_MIScriptingToolkit import granta as mpy\n",
+    "mi = mpy.connect('http://localhost/mi_servicelayer', autologon=True)\n",
+    "db = mi.get_db(db_key='MI_Training')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Access a layout and inspect its properties\n",
+    "\n",
+    "The `Table.layouts` property contains a **dict** of all layouts in the table, indexed by the layout name."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:53:36.381190Z",
+     "iopub.status.busy": "2021-07-15T09:53:36.380189Z",
+     "iopub.status.idle": "2021-07-15T09:53:38.449436Z",
+     "shell.execute_reply": "2021-07-15T09:53:38.449436Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'Polymers': <TableLayout: Polymers; categories: 24>,\n",
+       " 'Metals': <TableLayout: Metals; categories: 19>,\n",
+       " 'Aerospace materials': <TableLayout: Aerospace materials; categories: 18>,\n",
+       " 'Ceramics': <TableLayout: Ceramics; categories: 19>,\n",
+       " 'All bulk materials': <TableLayout: All bulk materials; categories: 20>,\n",
+       " 'All Attributes': <TableLayout: All Attributes; categories: 30>,\n",
+       " 'Explore list layout Materials': <TableLayout: Explore list layout Materials; categories: 1>,\n",
+       " 'Explore list layout Polymers': <TableLayout: Explore list layout Polymers; categories: 2>}"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "tab = db.get_table('MaterialUniverse')\n",
+    "tab.layouts"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Select a particular **Layout** object and view the categories and attributes within the layout."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:53:38.453436Z",
+     "iopub.status.busy": "2021-07-15T09:53:38.452435Z",
+     "iopub.status.idle": "2021-07-15T09:53:38.464415Z",
+     "shell.execute_reply": "2021-07-15T09:53:38.465415Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['General properties',\n",
+       " 'Composition overview',\n",
+       " 'Composition detail (polymers and natural materials)',\n",
+       " 'Restricted substances',\n",
+       " 'Bio-data',\n",
+       " 'Foam properties',\n",
+       " 'Mechanical properties',\n",
+       " 'Impact properties',\n",
+       " 'Thermal properties',\n",
+       " 'Processing properties',\n",
+       " 'Electrical properties',\n",
+       " 'Optical properties',\n",
+       " 'Absorption, permeability',\n",
+       " 'Durability: flammability',\n",
+       " 'Durability: fluids and sunlight',\n",
+       " 'Chemical resistance to specific chemicals',\n",
+       " 'Geo-economic data for principal component',\n",
+       " 'Primary material production: energy, CO2 and water',\n",
+       " 'Eco-indicators for principal component',\n",
+       " 'Material processing: energy',\n",
+       " 'Material processing: CO2 footprint',\n",
+       " 'Material recycling: energy, CO2 and recycle fraction',\n",
+       " 'Notes',\n",
+       " 'Further Information']"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "polymers_layout = tab.layouts['Polymers']\n",
+    "polymers_layout.categories"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `attributes_by_category` property contains a **dict** of attributes indexed by their category."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:53:38.470414Z",
+     "iopub.status.busy": "2021-07-15T09:53:38.470414Z",
+     "iopub.status.idle": "2021-07-15T09:53:38.479767Z",
+     "shell.execute_reply": "2021-07-15T09:53:38.480767Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'General properties': ['Designation',\n",
+       "  'Tradenames',\n",
+       "  'Density',\n",
+       "  'Price',\n",
+       "  'Material form'],\n",
+       " 'Composition overview': ['Composition (summary)',\n",
+       "  'Polymer class',\n",
+       "  'Polymer type',\n",
+       "  'Polymer type full name',\n",
+       "  '% filler (by weight)',\n",
+       "  'Filler type',\n",
+       "  'Additive'],\n",
+       " 'Composition detail (polymers and natural materials)': ['Polymer',\n",
+       "  'Flame retardant additive',\n",
+       "  'Impact modifier',\n",
+       "  'Plasticizer/oil',\n",
+       "  'MoS2 (molybdenum disulfide)',\n",
+       "  'PTFE (lubricant)',\n",
+       "  'Silicone (lubricant)',\n",
+       "  'Aluminum (flake)',\n",
+       "  'Aramid (fiber)',\n",
+       "  'BaSO4 (barium sulfate)',\n",
+       "  'Carbon (fiber)',\n",
+       "  'Carbon (powder)',\n",
+       "  'Glass (fiber)',\n",
+       "  'Glass (mat/fabric)',\n",
+       "  'Glass (other)',\n",
+       "  'Graphite (powder)',\n",
+       "  'Mica',\n",
+       "  'Mineral (unspecified)',\n",
+       "  'Rag/cotton/fabric',\n",
+       "  'Stainless steel (fiber)',\n",
+       "  'Talc',\n",
+       "  'Woodflour / cellulose'],\n",
+       " 'Restricted substances': ['Restricted substances associated with this material',\n",
+       "  'Restricted substances that may be associated with this material',\n",
+       "  'Restricted substances used in the manufacture of this material',\n",
+       "  'Restricted substances that may be used in the manufacture of this material',\n",
+       "  'Substance declaration available?'],\n",
+       " 'Bio-data': ['RoHS (EU) compliant grades?', 'Food contact'],\n",
+       " 'Foam properties': ['Anisotropy ratio', 'Cells/volume', 'Relative density'],\n",
+       " 'Mechanical properties': [\"Young's modulus\",\n",
+       "  'Compressive modulus',\n",
+       "  'Flexural modulus',\n",
+       "  'Shear modulus',\n",
+       "  \"Poisson's ratio\",\n",
+       "  'Shape factor',\n",
+       "  'Yield strength (elastic limit)',\n",
+       "  'Tensile stress at 100% strain',\n",
+       "  'Tensile stress at 300% strain',\n",
+       "  'Tensile strength',\n",
+       "  'Compressive strength',\n",
+       "  'Compressive stress @ 25% strain',\n",
+       "  'Compressive stress @ 50% strain',\n",
+       "  'Flexural strength (modulus of rupture)',\n",
+       "  'Shear strength',\n",
+       "  'Elongation at yield',\n",
+       "  'Elongation',\n",
+       "  'Hardness - Rockwell M',\n",
+       "  'Hardness - Rockwell R',\n",
+       "  'Hardness - Shore D',\n",
+       "  'Hardness - Shore A',\n",
+       "  'Fatigue strength at 10^7 cycles',\n",
+       "  'Fracture toughness',\n",
+       "  'Mechanical loss coefficient (tan delta)',\n",
+       "  'Densification strain',\n",
+       "  'Compression set at 23°C',\n",
+       "  'Compression set at 70°C',\n",
+       "  'Compression set at 100°C',\n",
+       "  'Tear strength'],\n",
+       " 'Impact properties': ['Impact strength, notched 23 °C',\n",
+       "  'Impact strength, notched -30 °C',\n",
+       "  'Impact strength, unnotched 23 °C',\n",
+       "  'Impact strength, unnotched -30 °C'],\n",
+       " 'Thermal properties': ['Melting point',\n",
+       "  'Glass temperature',\n",
+       "  'Heat deflection temperature 0.45MPa',\n",
+       "  'Heat deflection temperature 1.8MPa',\n",
+       "  'Maximum service temperature',\n",
+       "  'Minimum service temperature',\n",
+       "  'Thermal conductivity',\n",
+       "  'Specific heat capacity',\n",
+       "  'Thermal expansion coefficient',\n",
+       "  'Vicat softening point'],\n",
+       " 'Processing properties': ['Melt temperature',\n",
+       "  'Mold temperature',\n",
+       "  'Linear mold shrinkage',\n",
+       "  'Molding pressure range'],\n",
+       " 'Electrical properties': ['Electrical resistivity',\n",
+       "  'Dielectric constant (relative permittivity)',\n",
+       "  'Dissipation factor (dielectric loss tangent)',\n",
+       "  'Dielectric strength (dielectric breakdown)',\n",
+       "  'Comparative tracking index'],\n",
+       " 'Optical properties': ['Transparency', 'Refractive index'],\n",
+       " 'Absorption, permeability': ['Water absorption @ 24 hrs',\n",
+       "  'Water vapor transmission',\n",
+       "  'Permeability (O2)',\n",
+       "  'Permeability (CO2)',\n",
+       "  'Permeability (N2)'],\n",
+       " 'Durability: flammability': ['Flammability',\n",
+       "  'Flammability - typical UL 94 rating',\n",
+       "  'Oxygen index'],\n",
+       " 'Durability: fluids and sunlight': ['Chemical resistance, overview',\n",
+       "  'Chem. resistance index (0=worst, 1=best)',\n",
+       "  'Env. stress crack index (0=worst, 1=best)',\n",
+       "  'Water (fresh)',\n",
+       "  'Water (salt)',\n",
+       "  'Weak acids',\n",
+       "  'Strong acids',\n",
+       "  'Weak alkalis',\n",
+       "  'Strong alkalis',\n",
+       "  'Organic solvents',\n",
+       "  'Oils and fuels',\n",
+       "  'UV radiation (sunlight)',\n",
+       "  'ASTM D2000 heat resistance type',\n",
+       "  'ASTM D2000 oil resistance class'],\n",
+       " 'Chemical resistance to specific chemicals': [],\n",
+       " 'Geo-economic data for principal component': ['Principal component',\n",
+       "  'Reserves',\n",
+       "  'Main mining areas'],\n",
+       " 'Primary material production: energy, CO2 and water': ['Embodied energy, primary production',\n",
+       "  'CO2 footprint, primary production',\n",
+       "  'NOx creation',\n",
+       "  'SOx creation',\n",
+       "  'Water usage'],\n",
+       " 'Eco-indicators for principal component': ['Eco-indicator 95',\n",
+       "  'Eco-indicator 99',\n",
+       "  'EPS value'],\n",
+       " 'Material processing: energy': ['Polymer molding energy',\n",
+       "  'Polymer extrusion energy',\n",
+       "  'Autoclave molding energy',\n",
+       "  'Compression molding energy',\n",
+       "  'Filament winding energy',\n",
+       "  'Matched die (preform) molding energy',\n",
+       "  'Pultrusion energy',\n",
+       "  'Resin spray-up energy',\n",
+       "  'Resin transfer molding (RTM) energy',\n",
+       "  'Vacuum assisted resin infusion (VARI) energy',\n",
+       "  'Coarse machining energy (per unit wt removed)',\n",
+       "  'Fine machining energy (per unit wt removed)',\n",
+       "  'Grinding energy (per unit wt removed)',\n",
+       "  'Construction energy'],\n",
+       " 'Material processing: CO2 footprint': ['Polymer molding CO2',\n",
+       "  'Polymer extrusion CO2',\n",
+       "  'Autoclave molding CO2',\n",
+       "  'Compression molding CO2',\n",
+       "  'Filament winding CO2',\n",
+       "  'Matched die (preform) molding CO2',\n",
+       "  'Pultrusion CO2',\n",
+       "  'Resin spray-up CO2',\n",
+       "  'Resin transfer molding (RTM) CO2',\n",
+       "  'Vacuum assisted resin infusion (VARI) CO2',\n",
+       "  'Coarse machining CO2 (per unit wt removed)',\n",
+       "  'Fine machining CO2 (per unit wt removed)',\n",
+       "  'Grinding CO2 (per unit wt removed)',\n",
+       "  'Construction CO2'],\n",
+       " 'Material recycling: energy, CO2 and recycle fraction': ['Recycle',\n",
+       "  'Embodied energy, recycling',\n",
+       "  'CO2 footprint, recycling',\n",
+       "  'Recycle fraction in current supply',\n",
+       "  'Downcycle',\n",
+       "  'Combust for energy recovery',\n",
+       "  'Heat of combustion (net)',\n",
+       "  'Combustion CO2',\n",
+       "  'Landfill',\n",
+       "  'Biodegrade',\n",
+       "  'A renewable resource?',\n",
+       "  'Possible substitutes for principal component',\n",
+       "  'Recycle mark'],\n",
+       " 'Notes': ['Typical uses',\n",
+       "  'Other notes',\n",
+       "  'Process information',\n",
+       "  'Warning',\n",
+       "  'Reference sources'],\n",
+       " 'Further Information': []}"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "polymers_layout.attributes_by_category"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

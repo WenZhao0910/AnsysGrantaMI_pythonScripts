@@ -1,0 +1,647 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Create and Edit Tabular Data\n",
+    "Create a new tabular attribute, add, delete and swap rows, and edit the units."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Create a new record\n",
+    "Connect to MI and specify a database and table."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:51.186813Z",
+     "iopub.status.busy": "2021-07-15T09:49:51.185813Z",
+     "iopub.status.idle": "2021-07-15T09:49:52.991358Z",
+     "shell.execute_reply": "2021-07-15T09:49:52.992357Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from datetime import datetime\n",
+    "from GRANTA_MIScriptingToolkit import granta as mpy\n",
+    "\n",
+    "mi = mpy.connect('http://localhost/mi_servicelayer', autologon=True)\n",
+    "db = mi.get_db(db_key='MI_Training')\n",
+    "tab = db.get_table('Tensile Test Data')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Create a new record."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:52.995358Z",
+     "iopub.status.busy": "2021-07-15T09:49:52.995358Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.116050Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.117050Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "now = datetime.now().strftime(\"%c\")\n",
+    "recordName = 'STK Example 14:{}'.format(now)\n",
+    "rec = tab.create_record(recordName, subsets={'In Progress'})"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Access a Tabular attribute\n",
+    "Access the (empty) Tabular attribute *Workflow history*."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.120050Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.119050Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.816734Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.816734Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<TabularValue name: Workflow history (not loaded)>"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist = rec.attributes['Workflow history']\n",
+    "hist"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Inspect the tabular datum. Using the method `show()` shows the table in ASCII format."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.819734Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.819734Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.831219Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.832221Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "             User              |              Date              |            Comments            |      Linking Value (None)     \n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "hist.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Look at the `__repr__` of the attribute. There are currently no rows in the table."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.835696Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.834697Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.847638Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.846637Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<TabularValue name: Workflow history, shape: 4 x 0>"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Tabular attributes can be loaded with the `load()` method (there is no data to load in this example):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.850638Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.849637Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.862857Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.862857Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "hist.load()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Add rows and data\n",
+    "\n",
+    "Add three (empty) rows to the Tabular object, and view the table in an ACSII-style format."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.865853Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.864853Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.877855Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.878854Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "             User              |              Date              |            Comments            |      Linking Value (None)     \n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "             None              |              None              |              None              |  '<linking value not chosen>' \n",
+      "             None              |              None              |              None              |  '<linking value not chosen>' \n",
+      "             None              |              None              |              None              |  '<linking value not chosen>' \n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "hist.add_row()\n",
+    "hist.add_row()\n",
+    "hist.add_row()\n",
+    "hist.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Data is added by accessing the `tabular` property. The column name should be provided as a string followed by the index of the row. \n",
+    "Start by populating the first row:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.882853Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.881853Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.893853Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.894854Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Your username',\n",
+       " '2019-01-01',\n",
+       " 'This is an example comment',\n",
+       " '<linking value not chosen>']"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist['User', 0] = 'Your username'\n",
+    "hist['Date', 0] = '2019-01-01'  # dates should always be provided in the format YYY-MM-DD\n",
+    "hist['Comments', 0] = 'This is an example comment'\n",
+    "hist.data[:][0]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Populate the second row:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.898854Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.897856Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.909418Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.910419Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Another username',\n",
+       " '2019-01-02',\n",
+       " 'This is another example comment',\n",
+       " '<linking value not chosen>']"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist['User', 1] = 'Another username'\n",
+    "hist['Date', 1] = '2019-01-02'\n",
+    "hist['Comments', 1] = 'This is another example comment'\n",
+    "hist.data[:][1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Then populate the third row. The data is stored locally, so the linking values are displayed as `<linking value not chosen>`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.914419Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.913418Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.925418Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.926419Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Another username',\n",
+       " '2019-01-02',\n",
+       " 'This is another example comment',\n",
+       " '<linking value not chosen>']"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist['User', 2] = 'Another username'\n",
+    "hist['Date', 2] = '2019-01-02'\n",
+    "hist['Comments', 2] = 'This is another example comment'\n",
+    "hist.data[:][2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.929418Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.929418Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.940418Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.941418Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "             User              |              Date              |            Comments            |      Linking Value (None)     \n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "       'Your username'         |          '2019-01-01'          |  'This is an example comment'  |  '<linking value not chosen>' \n",
+      "      'Another username'       |          '2019-01-02'          | 'This is another example c...' |  '<linking value not chosen>' \n",
+      "      'Another username'       |          '2019-01-02'          | 'This is another example c...' |  '<linking value not chosen>' \n",
+      "---------------------------------------------------------------------------------------------------------------------------------\n",
+      "\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "[['Your username',\n",
+       "  '2019-01-01',\n",
+       "  'This is an example comment',\n",
+       "  '<linking value not chosen>'],\n",
+       " ['Another username',\n",
+       "  '2019-01-02',\n",
+       "  'This is another example comment',\n",
+       "  '<linking value not chosen>'],\n",
+       " ['Another username',\n",
+       "  '2019-01-02',\n",
+       "  'This is another example comment',\n",
+       "  '<linking value not chosen>']]"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist.show()\n",
+    "hist.data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Edit the table\n",
+    "Rows can be moved using the `swap_rows()` method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.944418Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.944418Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.956418Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.957419Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[['Your username',\n",
+       "  '2019-01-01',\n",
+       "  'This is an example comment',\n",
+       "  '<linking value not chosen>'],\n",
+       " ['Another username',\n",
+       "  '2019-01-02',\n",
+       "  'This is another example comment',\n",
+       "  '<linking value not chosen>']]"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist.data[:][:2]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.960418Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.959418Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.971418Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.972418Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "hist.swap_rows(0, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.975418Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.975418Z",
+     "iopub.status.idle": "2021-07-15T09:49:53.987419Z",
+     "shell.execute_reply": "2021-07-15T09:49:53.988418Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[['Another username',\n",
+       "  '2019-01-02',\n",
+       "  'This is another example comment',\n",
+       "  '<linking value not chosen>'],\n",
+       " ['Your username',\n",
+       "  '2019-01-01',\n",
+       "  'This is an example comment',\n",
+       "  '<linking value not chosen>']]"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist.data[:][:2]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Rows can also be deleted; for example, one of the two duplicate rows in this table."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:53.991419Z",
+     "iopub.status.busy": "2021-07-15T09:49:53.990418Z",
+     "iopub.status.idle": "2021-07-15T09:49:54.002418Z",
+     "shell.execute_reply": "2021-07-15T09:49:54.003418Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "hist.delete_row(0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Access the units\n",
+    "Each **Tabular** object is associated with a **TabularUnits** object which stores the units for the Tabular data. View (and edit) these units through the `tabular.units` property."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:54.006418Z",
+     "iopub.status.busy": "2021-07-15T09:49:54.005418Z",
+     "iopub.status.idle": "2021-07-15T09:49:54.017654Z",
+     "shell.execute_reply": "2021-07-15T09:49:54.018417Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<Tabular Units, shape: 2 x 3>"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist.units"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Access the complete set of units for the tabular datum"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:54.021418Z",
+     "iopub.status.busy": "2021-07-15T09:49:54.021418Z",
+     "iopub.status.idle": "2021-07-15T09:49:54.033233Z",
+     "shell.execute_reply": "2021-07-15T09:49:54.034338Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[['', '', '', None], ['', '', '', None]]"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "hist.units.data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Write your changes to MI\n",
+    "Set your new attribute to update, and write the changes to the server."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:49:54.037234Z",
+     "iopub.status.busy": "2021-07-15T09:49:54.037234Z",
+     "iopub.status.idle": "2021-07-15T09:49:55.125350Z",
+     "shell.execute_reply": "2021-07-15T09:49:55.126350Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "rec.set_attributes([hist])\n",
+    "rec = mi.update([rec])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Notes about Tabular data:\n",
+    " * Point-type values in Tabular cannot have parameters, and are always lists.\n",
+    " * Any changes to linked data will be ignored on import."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

@@ -1,0 +1,204 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Get Attributes\n",
+    "Find out about the database schema by accessing the `attributes` property of the **Table** object."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Connect to MI"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:38:06.201262Z",
+     "iopub.status.busy": "2021-07-15T09:38:06.200262Z",
+     "iopub.status.idle": "2021-07-15T09:38:06.894658Z",
+     "shell.execute_reply": "2021-07-15T09:38:06.895659Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from GRANTA_MIScriptingToolkit import granta as mpy\n",
+    "\n",
+    "mi = mpy.connect('http://localhost/mi_servicelayer', autologon=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Get table \n",
+    "Get a database, then set the unit system for the **Database** object."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:38:06.909963Z",
+     "iopub.status.busy": "2021-07-15T09:38:06.907967Z",
+     "iopub.status.idle": "2021-07-15T09:38:07.199319Z",
+     "shell.execute_reply": "2021-07-15T09:38:07.200317Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Metric'"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "db = mi.get_db(db_key='MI_Training')\n",
+    "db.set_unit_system('Metric')\n",
+    "db.unit_system"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Get a table from the database."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:38:07.204329Z",
+     "iopub.status.busy": "2021-07-15T09:38:07.203480Z",
+     "iopub.status.idle": "2021-07-15T09:38:08.372931Z",
+     "shell.execute_reply": "2021-07-15T09:38:08.373930Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<Table name: Training Exercise for Import, subsets: set()>"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "tab = db.get_table('Training Exercise for Import')\n",
+    "tab"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Access the attribute definitions \n",
+    "These are associated with the **Table** object through the `attributes` property,\n",
+    "which returns a dictionary of **AttributeDefinition** objects."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:38:08.376929Z",
+     "iopub.status.busy": "2021-07-15T09:38:08.376929Z",
+     "iopub.status.idle": "2021-07-15T09:38:08.806739Z",
+     "shell.execute_reply": "2021-07-15T09:38:08.807738Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Name                           -    Type    -    Unit    -   Meta?   \n",
+      "----------------------------------------------------------------------\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Base                           -    DISC    -            -   False   \n",
+      "Composition                    -    STXT    -            -   False   \n",
+      "Density                        -    POIN    -   kg/m^3   -   False   \n",
+      "Description                    -    LTXT    -            -   False   \n",
+      "Document                       -    FILE    -            -   False   \n",
+      "Electrical Properties          -    DISC    -            -   False   \n",
+      "Material                       -    STXT    -            -   False   \n",
+      "More Information               -    HLNK    -            -   False   \n",
+      "Tensile Modulus                -    RNGE    -    GPa     -   False   \n",
+      "Tensile Strength               -    RNGE    -    MPa     -   False   \n",
+      "Transparent                    -    LOGI    -            -   False   \n",
+      "Typical Use                    -    PICT    -            -   False   \n",
+      "Young's Modulus                -    FUNC    -    GPa     -   False   \n",
+      "Stress-strain Chart            -    FUNC    -    MPa     -   False   \n",
+      "Creep Rupture                  -    FUNC    -    MPa     -   False   \n",
+      "Environmental Resistance       -    DSFN    -            -   False   \n",
+      "Design Allowable Data          -    TABL    -            -   False   \n",
+      "Atomic number                  -    INPT    -            -   False   \n",
+      "Date of datasheet release      -    DTTM    -            -   False   \n",
+      "Wikipedia page                 -    HLNK    -            -   False   \n",
+      "Environmental performances ove -    TABL    -            -   False   \n",
+      "Characterization of this mater -    TABL    -            -   False   \n",
+      "Yield Strength                 -    POIN    -    MPa     -   False   \n"
+     ]
+    }
+   ],
+   "source": [
+    "print('{:30.30} - {:^10.10} - {:^10.10} - {:^10.10}'.format('Name', 'Type', 'Unit', 'Meta?'))\n",
+    "print('-'*70)\n",
+    "for name, att in tab.attributes.items():\n",
+    "    output = '{:30.30} - {:^10.10} - {:^10.10} - {:^10.10}'.format(name, att.type, att.unit, str(att.is_meta))\n",
+    "    print(output)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

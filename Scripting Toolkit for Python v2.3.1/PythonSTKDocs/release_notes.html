@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>What’s new in Version 2.3 &mdash; MI Scripting Toolkit for Python 2.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/Materials.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Upgrading from earlier versions" href="upgrading.html" />
+    <link rel="prev" title="Welcome" href="welcome.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/Materials-STK.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new in Version 2.3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#streamlined-api-enhancements-and-bug-fixes">Streamlined API enhancements and bug fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extended-platform-support">Extended platform support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-and-expanded-example-notebooks">New and expanded Example Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-with-new-mi-import-services">Integration with new MI import services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-records-linked-via-tabular-data">Fetch records linked via tabular data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bug-fixes-and-feature-requests">Bug fixes and feature requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#foundation-api-enhancements-and-bug-fixes">Foundation API enhancements and bug fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backwards-incompatible-api-changes">Backwards incompatible API changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading from earlier versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stream_example.html">Streamlined API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analytics.html">Data Analytics Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MI Scripting Toolkit for Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>What’s new in Version 2.3</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="what-s-new-in-version-2-3">
+<span id="release-notes"></span><h1>What’s new in Version 2.3<a class="headerlink" href="#what-s-new-in-version-2-3" title="Permalink to this headline">¶</a></h1>
+<p>Key features introduced or improved in MI Scripting Toolkit 2.3.</p>
+<div class="section" id="streamlined-api-enhancements-and-bug-fixes">
+<h2>Streamlined API enhancements and bug fixes<a class="headerlink" href="#streamlined-api-enhancements-and-bug-fixes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="extended-platform-support">
+<h3>Extended platform support<a class="headerlink" href="#extended-platform-support" title="Permalink to this headline">¶</a></h3>
+<p>MI Scripting Toolkit now supports autologin for Linux installs, and can be installed on SUSE Enterprise 15. This release has also been certified on Cygwin 3.1.7-1.</p>
+</div>
+<div class="section" id="new-and-expanded-example-notebooks">
+<h3>New and expanded Example Notebooks<a class="headerlink" href="#new-and-expanded-example-notebooks" title="Permalink to this headline">¶</a></h3>
+<p>The Streamlined API examples now cover more functionality, including examples of more attribute data types and searches, and new scripts added for OpenID Connect authentication and the asynchronous Job Queue.</p>
+</div>
+<div class="section" id="integration-with-new-mi-import-services">
+<h3>Integration with new MI import services<a class="headerlink" href="#integration-with-new-mi-import-services" title="Permalink to this headline">¶</a></h3>
+<p>Create asynchronous import jobs and interact with the Job Queue via the MI Scripting Toolkit.</p>
+</div>
+<div class="section" id="fetch-records-linked-via-tabular-data">
+<h3>Fetch records linked via tabular data<a class="headerlink" href="#fetch-records-linked-via-tabular-data" title="Permalink to this headline">¶</a></h3>
+<p>Use Association Chains to find and fetch linked records, with the ability to specify a chain or the link direction.</p>
+</div>
+<div class="section" id="bug-fixes-and-feature-requests">
+<h3>Bug fixes and feature requests<a class="headerlink" href="#bug-fixes-and-feature-requests" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Functional data attributes now support optional parameters (empty values or columns in functional data objects).</p></li>
+<li><p>Pseudo-attribute subsets now fully supported by the MI Scripting Toolkit.</p></li>
+<li><p>Users can now check whether an attribute is single- or multi-valued; previously this was only flagged by an exception raised when updating the record on the server.</p></li>
+<li><p>Binary data stored in File and Picture attributes is now accessible through the <code class="docutils literal notranslate"><span class="pre">binary_data</span></code> property, meaning files can be loaded from memory as well as from a file on disk.</p></li>
+<li><p>Hyperlink attributes have accessible and settable display type and description properties.</p></li>
+<li><p>Support added for Not Applicable attributes (<code class="docutils literal notranslate"><span class="pre">isApplicable</span></code> flag can be set through the MI Scripting Toolkit).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Record.all_children()</span></code> now returns a list of records, rather than a <code class="docutils literal notranslate"><span class="pre">TreeIterator</span></code> object.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="foundation-api-enhancements-and-bug-fixes">
+<h2>Foundation API enhancements and bug fixes<a class="headerlink" href="#foundation-api-enhancements-and-bug-fixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Examples now only use the MI Training database.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LookupValue</span></code> added to <code class="docutils literal notranslate"><span class="pre">RecordReference</span></code> to support exact short-text attribute searches.</p></li>
+<li><p>Support for pseudo-attribute subsets added.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetAssociatedRecords</span></code> response and request added to support association chains.</p></li>
+</ul>
+</div>
+<div class="section" id="backwards-incompatible-api-changes">
+<h2>Backwards incompatible API changes<a class="headerlink" href="#backwards-incompatible-api-changes" title="Permalink to this headline">¶</a></h2>
+<p>We recommend changing scripts using <code class="docutils literal notranslate"><span class="pre">File</span></code> or <code class="docutils literal notranslate"><span class="pre">Picture</span></code> objects in preparation for a pending deprecation, described in the Version 2.2 section of the <a class="reference internal" href="upgrading.html#upgrading"><span class="std std-ref">Upgrading from earlier versions</span></a> page.</p>
+<p>Version 2.2 scripts should work without modification.</p>
+<p>Version 2.1 scripts should work without modification.</p>
+<p>Version 2.0 scripts may need to be modified to account for breaking changes identified in the Version 2.0 section of the <a class="reference internal" href="upgrading.html#upgrading"><span class="std std-ref">Upgrading from earlier versions</span></a> page.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading from earlier versions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="welcome.html" class="btn btn-neutral float-left" title="Welcome" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; <a href="copyright.html">Copyright</a> 2021 ANSYS, Inc. or its affiliated companies. All rights reserved.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

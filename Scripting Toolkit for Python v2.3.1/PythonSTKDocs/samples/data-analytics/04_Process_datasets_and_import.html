@@ -1,0 +1,1536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Process datasets and import results into Granta MI &mdash; MI Scripting Toolkit for Python 2.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/Materials.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="next" title="Find the area under a curve" href="05_Find_area_under_a_curve.html" />
+    <link rel="prev" title="Fit series data and import fit results" href="03_Fit_series_data_and_import.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/Materials-STK.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">What’s new in Version 2.3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../upgrading.html">Upgrading from earlier versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stream_example.html">Streamlined API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../data_analytics.html">Data Analytics Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_Create_scatter_plots.html">Create scatter plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_Compare_datasets_graphically.html">Compare datasets graphically</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_Plot_data_by_category.html">Plot data by category</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Fit_series_data_and_import.html">Fit series data and import fit results</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Process datasets and import results into Granta MI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Load-data-from-CSV">Load data from CSV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Process-the-data">Process the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-Load-Displacement-data">Plot Load-Displacement data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Convert-Load-Displacement-to-Stress-Strain">Convert Load-Displacement to Stress-Strain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-Ultimate-tensile-strength">Calculate Ultimate tensile strength</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-Young’s-modulus">Calculate Young’s modulus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-0.2%-offset-yield-stress">Calculate 0.2% offset yield stress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-Elongation-at-failure">Calculate Elongation at failure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-True-Stress-Strain">Calculate True Stress-Strain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Calculate-True-Stress-True-Plastic-Strain">Calculate True Stress-True Plastic Strain</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Import-data-and-results-into-Granta-MI">Import data and results into Granta MI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Create-and-populate-point-attributes">Create and populate point attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-and-populate-text-attributes">Create and populate text attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-and-populate-functional-attributes">Create and populate functional attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Write-your-changes-to-Granta-MI">Write your changes to Granta MI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_Find_area_under_a_curve.html">Find the area under a curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_Calculate_statistics_for_records.html">Calculate statistics for a set of records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_Calculate_statistics_for_functional_attributes.html">Calculate statistics for functional data attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MI Scripting Toolkit for Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../data_analytics.html">Data Analytics Examples</a> &raquo;</li>
+        
+      <li>Process datasets and import results into Granta MI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<a href="../../samples\data-analytics\04_Process_datasets_and_import.ipynb" id='example' type="application/octet-stream" download>
+View the .ipynb file.
+</a><hr class="docutils" />
+<div class="section" id="Process-datasets-and-import-results-into-Granta-MI">
+<h1>Process datasets and import results into Granta MI<a class="headerlink" href="#Process-datasets-and-import-results-into-Granta-MI" title="Permalink to this headline">¶</a></h1>
+<p>Load raw data from a <em>.csv</em> file and run a typical tensile data analysis to extract values for <em>Ultimate Tensile Strength</em>, <em>Young’s Modulus</em> and <em>Elongation at failure</em>. Import the results into Granta MI.</p>
+<div class="section" id="Load-data-from-CSV">
+<h2>Load data from CSV<a class="headerlink" href="#Load-data-from-CSV" title="Permalink to this headline">¶</a></h2>
+<p>The raw <em>Load</em> vs <em>Displacement</em> data is stored in a CSV file. Import the data directly into a DataFrame using the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> function <code class="docutils literal notranslate"><span class="pre">.read_csv()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;raw_test_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df_raw</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Displacement [mm]</th>
+      <th>Load [N]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.005282</td>
+      <td>273.392</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.005282</td>
+      <td>307.173</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.006010</td>
+      <td>331.741</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.006738</td>
+      <td>352.556</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The convention in this example is that all properties are in SI units unless otherwise specified. Create a new DataFrame, converting <em>Displacement</em> to SI units and renaming both columns.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Displacement&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;Displacement [mm]&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e3</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Load&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;Load [N]&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Displacement</th>
+      <th>Load</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000005</td>
+      <td>273.392</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000005</td>
+      <td>307.173</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000006</td>
+      <td>331.741</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.000007</td>
+      <td>352.556</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="Process-the-data">
+<h2>Process the data<a class="headerlink" href="#Process-the-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Plot-Load-Displacement-data">
+<h3>Plot Load-Displacement data<a class="headerlink" href="#Plot-Load-Displacement-data" title="Permalink to this headline">¶</a></h3>
+<p>This code snippet is optional, and is included to increase the size of all plots generated in this notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">125</span>
+</pre></div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to plot the Load-Displacement curve. For this plot, we’ve divided <code class="docutils literal notranslate"><span class="pre">df.Load</span></code> by <code class="docutils literal notranslate"><span class="pre">1e3</span></code> so the y-axis is displayed in kN.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Displacement</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Load</span> <span class="o">/</span> <span class="mf">1e3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Displacement / m&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Load / kN&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Load vs displacement&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_12_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_12_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Convert-Load-Displacement-to-Stress-Strain">
+<h3>Convert Load-Displacement to Stress-Strain<a class="headerlink" href="#Convert-Load-Displacement-to-Stress-Strain" title="Permalink to this headline">¶</a></h3>
+<p>Converting the Load-Displacement curve into Stress-Strain requires the gauge length and area, given here as constants in SI units. In a full workflow, these values can be loaded from a source file.</p>
+<p>Calculate the <em>Stress</em> and <em>Strain</em> and store as new columns in the DataFrame.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">GAUGE_WIDTH</span> <span class="o">=</span> <span class="mf">0.0150068</span>
+<span class="n">GAUGE_THICKNESS</span> <span class="o">=</span> <span class="mf">0.0015077</span>
+<span class="n">GAUGE_LENGTH</span> <span class="o">=</span> <span class="mf">0.07997724</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Strain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Displacement</span> <span class="o">/</span> <span class="n">GAUGE_LENGTH</span>
+<span class="n">gauge_area</span> <span class="o">=</span> <span class="n">GAUGE_WIDTH</span> <span class="o">*</span> <span class="n">GAUGE_THICKNESS</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Stress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Load</span> <span class="o">/</span> <span class="n">gauge_area</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Displacement</th>
+      <th>Load</th>
+      <th>Strain</th>
+      <th>Stress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000</td>
+      <td>0.000000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000005</td>
+      <td>273.392</td>
+      <td>0.000066</td>
+      <td>1.208322e+07</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000005</td>
+      <td>307.173</td>
+      <td>0.000066</td>
+      <td>1.357626e+07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000006</td>
+      <td>331.741</td>
+      <td>0.000075</td>
+      <td>1.466210e+07</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.000007</td>
+      <td>352.556</td>
+      <td>0.000084</td>
+      <td>1.558207e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now create a plot of Stress-Strain:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\epsilon$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\sigma$ / MPa&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Stress vs Strain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_17_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_17_0.png" />
+</div>
+</div>
+<p>Since the plastic region extends over a large strain range, it is difficult to see detail in the elastic region.</p>
+<p>Create an inset and plot the elastic and yield region only.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># [left, bottom, width, height] relative to the figure</span>
+<span class="n">ax_inset</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">])</span>
+
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tensile response&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.004</span><span class="p">)</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.004</span><span class="p">])</span>
+
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">])</span>
+
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_19_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_19_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-Ultimate-tensile-strength">
+<h3>Calculate Ultimate tensile strength<a class="headerlink" href="#Calculate-Ultimate-tensile-strength" title="Permalink to this headline">¶</a></h3>
+<p><em>Ultimate tensile strength</em> can be calculated by taking the maximum value of the <code class="docutils literal notranslate"><span class="pre">df.Stress</span></code> column.</p>
+<p>Calculate and store the tensile strength in SI units and MPa (the latter will be used later).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">tens_strength</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">tens_strength_MPa</span> <span class="o">=</span> <span class="n">tens_strength</span> <span class="o">/</span> <span class="mf">1e6</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Ultimate tensile strength: </span><span class="si">{</span><span class="n">tens_strength_MPa</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Ultimate tensile strength: 581.13 MPa
+</pre></div></div>
+</div>
+<p>Add a marker and annotation on the stress-strain plot above, showing the location and value of the <em>Ultimate tensile strength</em>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">strain_at_uts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">==</span> <span class="n">tens_strength</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">strain_at_uts</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">tens_strength_MPa</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$\sigma_</span><span class="se">{{</span><span class="s1">ts</span><span class="se">}}</span><span class="s1">$: </span><span class="si">{</span><span class="n">tens_strength_MPa</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">,</span>
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">strain_at_uts</span><span class="p">,</span> <span class="n">tens_strength_MPa</span><span class="p">),</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">14</span><span class="p">),</span>
+            <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_24_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_24_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-Young’s-modulus">
+<h3>Calculate Young’s modulus<a class="headerlink" href="#Calculate-Young’s-modulus" title="Permalink to this headline">¶</a></h3>
+<p>Calculate <em>Young’s modulus</em> by taking the gradient of the Stress-Strain curve between 5% and 25% of the total tensile strength (chordal fit method). There is no interpolation, because the Stress-Strain values closest to the 5% and 25% bounds are used.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">LOWER_FRACTION</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">UPPER_FRACTION</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+<span class="k">def</span> <span class="nf">get_stress_strain_at_fraction_of_tensile_strength</span><span class="p">(</span><span class="n">fraction</span><span class="p">):</span>
+    <span class="n">stress_bound</span> <span class="o">=</span> <span class="n">tens_strength</span> <span class="o">*</span> <span class="n">fraction</span>
+    <span class="n">stress_difference</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">-</span> <span class="n">stress_bound</span>
+    <span class="n">nearest_row_number</span> <span class="o">=</span> <span class="n">stress_difference</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nearest_row</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nearest_row_number</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">nearest_row</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">nearest_row</span><span class="o">.</span><span class="n">Stress</span>
+
+<span class="n">lower_strain</span><span class="p">,</span> <span class="n">lower_stress</span> <span class="o">=</span> <span class="n">get_stress_strain_at_fraction_of_tensile_strength</span><span class="p">(</span><span class="n">LOWER_FRACTION</span><span class="p">)</span>
+<span class="n">upper_strain</span><span class="p">,</span> <span class="n">upper_stress</span> <span class="o">=</span> <span class="n">get_stress_strain_at_fraction_of_tensile_strength</span><span class="p">(</span><span class="n">UPPER_FRACTION</span><span class="p">)</span>
+
+<span class="n">youngs_modulus</span> <span class="o">=</span> <span class="p">(</span><span class="n">upper_stress</span> <span class="o">-</span> <span class="n">lower_stress</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">upper_strain</span> <span class="o">-</span> <span class="n">lower_strain</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Young&#39;s modulus (</span><span class="si">{</span><span class="n">LOWER_FRACTION</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">UPPER_FRACTION</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> tensile strength): </span><span class="si">{</span><span class="n">youngs_modulus</span> <span class="o">/</span> <span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GPa&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Young&#39;s modulus (5%-25% tensile strength): 204.65 GPa
+</pre></div></div>
+</div>
+<p>Add the chordal fit to the inset plot.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">stress_linear_fit</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span> <span class="o">*</span> <span class="n">youngs_modulus</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">stress_linear_fit</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Young&#39;s modulus&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_29_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_29_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-0.2%-offset-yield-stress">
+<h3>Calculate 0.2% offset yield stress<a class="headerlink" href="#Calculate-0.2%-offset-yield-stress" title="Permalink to this headline">¶</a></h3>
+<p>The offset yield stress is determined by calculating the intercept between the chordal fit line and the stress response.</p>
+<p>First add the offset chordal fit line to the plot, to show where the yield stress lies.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">STRAIN_OFFSET</span> <span class="o">=</span> <span class="mf">0.002</span>
+
+<span class="n">strain_offset</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span> <span class="o">+</span> <span class="n">STRAIN_OFFSET</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain_offset</span><span class="p">,</span> <span class="n">stress_linear_fit</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="s1">&#39;k:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;0.2% offset&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ax_inset</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">legend_position</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.575</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="n">legend_position</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_32_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_32_0.png" />
+</div>
+</div>
+<p>Calculate the difference between the solid blue and dotted black lines, then find the values immediately before and after the intercept. Perform a linear interpolation to find the exact value of the yield stress.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;find_intercept&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">-</span> <span class="n">youngs_modulus</span> <span class="o">*</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span> <span class="o">-</span> <span class="n">STRAIN_OFFSET</span><span class="p">)</span>
+<span class="n">first_row_index_above_intercept</span> <span class="o">=</span> \
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">find_intercept</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;find_intercept&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">first_row_index_above_intercept</span><span class="p">]</span>
+<span class="n">x_1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">find_intercept</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">first_row_index_above_intercept</span><span class="p">]</span>
+
+<span class="n">last_row_index_below_intercept</span> <span class="o">=</span> \
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">find_intercept</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;find_intercept&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_0</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">last_row_index_below_intercept</span><span class="p">]</span>
+<span class="n">x_0</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">find_intercept</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">last_row_index_below_intercept</span><span class="p">]</span>
+
+<span class="n">yield_stress</span> <span class="o">=</span> <span class="n">y_0</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">x_0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_1</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_1</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span>
+<span class="n">strain_at_yield</span> <span class="o">=</span> <span class="n">yield_stress</span> <span class="o">/</span> <span class="n">youngs_modulus</span> <span class="o">+</span> <span class="n">STRAIN_OFFSET</span>
+
+<span class="n">yield_stress_MPa</span> <span class="o">=</span> <span class="n">yield_stress</span> <span class="o">/</span> <span class="mf">1e6</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;0.2% offset yield stress: </span><span class="si">{</span><span class="n">yield_stress</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.2% offset yield stress: 335555698.60 MPa
+</pre></div></div>
+</div>
+<p>Plot the <em>0.2% offset yield stress</em> on the Stress-Strain plot. This time, plot the marker on both the full and inset axes, and annotate the inset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">strain_at_yield</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">yield_stress_MPa</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">strain_at_yield</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">yield_stress_MPa</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax_inset</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$\sigma_y$: </span><span class="si">{</span><span class="n">yield_stress_MPa</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">,</span>
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">strain_at_yield</span><span class="p">,</span> <span class="n">yield_stress_MPa</span><span class="p">),</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+            <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_36_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_36_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-Elongation-at-failure">
+<h3>Calculate Elongation at failure<a class="headerlink" href="#Calculate-Elongation-at-failure" title="Permalink to this headline">¶</a></h3>
+<p>The data has been pre-processed before import, so the last point in the data series is the failure point.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">stress_at_break</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">total_strain_at_break</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">elastic_strain_at_break</span> <span class="o">=</span> <span class="n">stress_at_break</span> <span class="o">/</span> <span class="n">youngs_modulus</span>
+<span class="n">elongation</span> <span class="o">=</span> <span class="n">total_strain_at_break</span> <span class="o">-</span> <span class="n">elastic_strain_at_break</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Elongation at failure: </span><span class="si">{</span><span class="n">elongation</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Elongation at failure: 22.27%
+</pre></div></div>
+</div>
+<p>Plot the <em>Elongation at failure</em> on the full-range axes, and add a line between the failure point and the elongation value. The legend updates to include all lines on both sets of axes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">total_strain_at_break</span><span class="p">,</span> <span class="n">elongation</span><span class="p">],</span> <span class="p">[</span><span class="n">stress_at_break</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;y-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Elongation&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">total_strain_at_break</span><span class="p">,</span> <span class="n">elongation</span><span class="p">],</span>
+           <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">stress_at_break</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+           <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+           <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">,</span>
+           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
+           <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+           <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">inset_handles</span><span class="p">,</span> <span class="n">inset_labels</span> <span class="o">=</span> <span class="n">ax_inset</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">ax_handles</span><span class="p">,</span> <span class="n">ax_labels</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+<span class="n">handles</span> <span class="o">=</span> <span class="n">inset_handles</span> <span class="o">+</span> <span class="n">ax_handles</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">inset_labels</span> <span class="o">+</span> <span class="n">ax_labels</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="n">legend_position</span><span class="p">,</span> <span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">})</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$\epsilon_f$: </span><span class="si">{</span><span class="n">elongation</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">elongation</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span>
+            <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_41_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_41_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-True-Stress-Strain">
+<h3>Calculate True Stress-Strain<a class="headerlink" href="#Calculate-True-Stress-Strain" title="Permalink to this headline">¶</a></h3>
+<p>Since there is a 1:1 relationship between engineering and true stress-strain values, <em>True Stress-Strain</em> is added to the DataFrame as additional columns.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">ts_position</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">==</span> <span class="n">tens_strength</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># true strain = ln(1 + eng strain)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;True_Strain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">ts_position</span><span class="p">])</span>
+
+<span class="c1"># true stress = eng stress * (1 + eng strain)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;True_Stress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">ts_position</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">True_Strain</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Displacement</th>
+      <th>Load</th>
+      <th>Strain</th>
+      <th>Stress</th>
+      <th>find_intercept</th>
+      <th>True_Strain</th>
+      <th>True_Stress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000</td>
+      <td>0.000000</td>
+      <td>0.000000e+00</td>
+      <td>4.093098e+08</td>
+      <td>0.000000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000005</td>
+      <td>273.392</td>
+      <td>0.000066</td>
+      <td>1.208322e+07</td>
+      <td>4.078764e+08</td>
+      <td>0.000066</td>
+      <td>1.208402e+07</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000005</td>
+      <td>307.173</td>
+      <td>0.000066</td>
+      <td>1.357626e+07</td>
+      <td>4.093694e+08</td>
+      <td>0.000066</td>
+      <td>1.357715e+07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000006</td>
+      <td>331.741</td>
+      <td>0.000075</td>
+      <td>1.466210e+07</td>
+      <td>4.085924e+08</td>
+      <td>0.000075</td>
+      <td>1.466320e+07</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.000007</td>
+      <td>352.556</td>
+      <td>0.000084</td>
+      <td>1.558207e+07</td>
+      <td>4.076494e+08</td>
+      <td>0.000084</td>
+      <td>1.558338e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Create a new plot to compare Engineering and True Stress-Strain.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Engineering Stress&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">True_Strain</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">True_Stress</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Stress&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\epsilon$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\sigma$ / MPa&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Engineering and True Stress vs Strain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_46_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_46_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-True-Stress-True-Plastic-Strain">
+<h3>Calculate True Stress-True Plastic Strain<a class="headerlink" href="#Calculate-True-Stress-True-Plastic-Strain" title="Permalink to this headline">¶</a></h3>
+<p>Create a new DataFrame to store the <em>True Stress-True Plastic Strain</em>, since the x axis is different to <em>Stress-Strain</em>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_plastic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">plastic_strain</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">True_Strain</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">True_Stress</span> <span class="o">/</span> <span class="n">youngs_modulus</span> <span class="o">-</span> <span class="n">STRAIN_OFFSET</span>
+<span class="n">df_plastic</span><span class="p">[</span><span class="s1">&#39;Strain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plastic_strain</span><span class="p">[</span><span class="n">plastic_strain</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Get only the stress values with a corresponding strain</span>
+<span class="n">df_plastic</span><span class="p">[</span><span class="s1">&#39;Stress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">True_Stress</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">df_plastic</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Manually add the first point Strain = 0, Stress = yield stress</span>
+<span class="n">first_point</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Strain&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Stress&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">yield_stress</span><span class="p">]})</span>
+<span class="n">df_plastic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">first_point</span><span class="p">,</span> <span class="n">df_plastic</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_plastic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Strain</th>
+      <th>Stress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>3.355557e+08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000008</td>
+      <td>3.370594e+08</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000029</td>
+      <td>3.374152e+08</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000050</td>
+      <td>3.377409e+08</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.000067</td>
+      <td>3.380495e+08</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Plot <em>True Stress-True Plastic Strain</em>. Force the x limit to be 0, but not the y limit (the curve starts at the <em>Yield stress</em>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_plastic</span><span class="p">[</span><span class="s1">&#39;Stress_MPa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_plastic</span><span class="o">.</span><span class="n">Stress</span> <span class="o">/</span> <span class="mf">1e6</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_plastic</span><span class="o">.</span><span class="n">Strain</span><span class="p">,</span> <span class="n">df_plastic</span><span class="o">.</span><span class="n">Stress_MPa</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Stress&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\epsilon$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$\sigma$ / MPa&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;True Stress vs True Plastic Strain&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/samples_data-analytics_04_Process_datasets_and_import_51_0.png" src="../../_images/samples_data-analytics_04_Process_datasets_and_import_51_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Import-data-and-results-into-Granta-MI">
+<h2>Import data and results into Granta MI<a class="headerlink" href="#Import-data-and-results-into-Granta-MI" title="Permalink to this headline">¶</a></h2>
+<p>Finally, import the raw data, processed data and results into a new Granta MI record.</p>
+<p>Connect to Granta MI and specify a database and table.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">GRANTA_MIScriptingToolkit</span> <span class="kn">import</span> <span class="n">granta</span> <span class="k">as</span> <span class="n">mpy</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">mpy</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">autologon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span><span class="s1">&#39;MI Training&#39;</span><span class="p">)</span>
+<span class="n">tensile_test_table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;Tensile Test Data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Create a new record to import the data into, using <code class="docutils literal notranslate"><span class="pre">datetime.now()</span></code> to ensure the record name is unique.</p>
+<p>At this stage, the record has only been created in the MI Scripting Toolkit. The changes will be pushed to Granta MI when <code class="docutils literal notranslate"><span class="pre">session.update()</span></code> is called at the end of the notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%c</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">record_name</span> <span class="o">=</span> <span class="s1">&#39;Tensile analysis </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+
+<span class="n">record</span> <span class="o">=</span> <span class="n">tensile_test_table</span><span class="o">.</span><span class="n">path_from</span><span class="p">(</span><span class="n">tensile_test_table</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Data Analytics&#39;</span><span class="p">],</span> <span class="n">record_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Create-and-populate-point-attributes">
+<h3>Create and populate point attributes<a class="headerlink" href="#Create-and-populate-point-attributes" title="Permalink to this headline">¶</a></h3>
+<p>Define a function to write a dict of attribute name-value pairs to point attributes on the record. Each dict will contain values with a single unit.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">write_points</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">unit</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">([</span><span class="n">a</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Build the dicts of attribute name-value pairs and call the function above on each. (The strain values are dimensionless but will be imported as a percentage, so they are multiplied by 100 before import.)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">stress_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Ultimate Tensile Strength&#39;</span><span class="p">:</span> <span class="n">tens_strength</span><span class="p">,</span>
+                <span class="s2">&quot;Young&#39;s Modulus (11-axis)&quot;</span><span class="p">:</span> <span class="n">youngs_modulus</span><span class="p">,</span>
+                <span class="s1">&#39;0.2% Offset Yield Stress&#39;</span><span class="p">:</span> <span class="n">yield_stress</span><span class="p">}</span>
+<span class="n">strain_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Strain at Ultimate Tensile Strength&#39;</span><span class="p">:</span> <span class="n">strain_at_uts</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;Elongation&#39;</span><span class="p">:</span> <span class="n">elongation</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;Strain at Tensile Failure&#39;</span><span class="p">:</span> <span class="n">total_strain_at_break</span> <span class="o">*</span> <span class="mi">100</span><span class="p">}</span>
+<span class="n">length_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Gauge Length&#39;</span><span class="p">:</span> <span class="n">GAUGE_LENGTH</span><span class="p">,</span>
+                <span class="s1">&#39;Gauge Width&#39;</span><span class="p">:</span> <span class="n">GAUGE_WIDTH</span><span class="p">,</span>
+                <span class="s1">&#39;Gauge Thickness&#39;</span><span class="p">:</span> <span class="n">GAUGE_THICKNESS</span><span class="p">}</span>
+<span class="n">area_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Gauge Area&#39;</span><span class="p">:</span> <span class="n">gauge_area</span><span class="p">}</span>
+
+<span class="n">write_points</span><span class="p">(</span><span class="n">stress_attrs</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+<span class="n">write_points</span><span class="p">(</span><span class="n">strain_attrs</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<span class="n">write_points</span><span class="p">(</span><span class="n">length_attrs</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">)</span>
+<span class="n">write_points</span><span class="p">(</span><span class="n">area_attrs</span><span class="p">,</span> <span class="s1">&#39;m^2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-and-populate-text-attributes">
+<h3>Create and populate text attributes<a class="headerlink" href="#Create-and-populate-text-attributes" title="Permalink to this headline">¶</a></h3>
+<p>Define a similar function for text attributes:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">write_text</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">([</span><span class="n">a</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Define the dict of text attributes, and call the function above. We’ve defined the attribute values manually, but they could easily be read from the source file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">range_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Linear fit between [</span><span class="si">{</span><span class="n">LOWER_FRACTION</span><span class="si">:</span><span class="s1">.1%</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">UPPER_FRACTION</span><span class="si">:</span><span class="s1">.1%</span><span class="si">}</span><span class="s1">] of Tensile strength&#39;</span>
+<span class="n">text_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Young&#39;s Modulus Calculation&quot;</span><span class="p">:</span> <span class="s1">&#39;Chord&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Test Type&#39;</span><span class="p">:</span> <span class="s1">&#39;Tensile&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Testing Standards&#39;</span><span class="p">:</span> <span class="s1">&#39;ASTM E8&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Alloy&#39;</span><span class="p">:</span> <span class="s1">&#39;AMS 6520&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Modulus Calculation Range&#39;</span><span class="p">:</span> <span class="n">range_text</span><span class="p">}</span>
+<span class="n">write_text</span><span class="p">(</span><span class="n">text_attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-and-populate-functional-attributes">
+<h3>Create and populate functional attributes<a class="headerlink" href="#Create-and-populate-functional-attributes" title="Permalink to this headline">¶</a></h3>
+<p>Finally, define a function to import functional attributes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">write_functional</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="n">y_unit</span><span class="p">,</span> <span class="n">x_unit</span><span class="p">,</span> <span class="n">x_name</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="n">x_values</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">y_unit</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">x_name</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">x_unit</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">xaxis</span><span class="p">[</span><span class="n">x_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">):</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">add_point</span><span class="p">({</span><span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="n">x_name</span><span class="p">:</span> <span class="n">x</span><span class="p">})</span>
+    <span class="n">record</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">([</span><span class="n">a</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Call the function for each curve generated in this script.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">write_functional</span><span class="p">(</span><span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;Load vs Displacement&#39;</span><span class="p">,</span>
+                <span class="n">y_unit</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>
+                <span class="n">x_unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span>
+                <span class="n">x_name</span><span class="o">=</span><span class="s1">&#39;Displacement&#39;</span><span class="p">,</span>
+                <span class="n">y_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Load</span><span class="p">,</span>
+                <span class="n">x_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Displacement</span><span class="p">)</span>
+
+<span class="n">write_functional</span><span class="p">(</span><span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;Tensile Response (11 axis)&#39;</span><span class="p">,</span>
+                <span class="n">y_unit</span><span class="o">=</span><span class="s1">&#39;Pa&#39;</span><span class="p">,</span>
+                <span class="n">x_unit</span><span class="o">=</span><span class="s1">&#39;strain&#39;</span><span class="p">,</span>
+                <span class="n">x_name</span><span class="o">=</span><span class="s1">&#39;Strain&#39;</span><span class="p">,</span>
+                <span class="n">y_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Stress</span><span class="p">,</span>
+                <span class="n">x_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Strain</span><span class="p">)</span>
+
+<span class="n">write_functional</span><span class="p">(</span><span class="n">attr_name</span><span class="o">=</span><span class="s1">&#39;True Stress vs True Plastic Strain&#39;</span><span class="p">,</span>
+                <span class="n">y_unit</span><span class="o">=</span><span class="s1">&#39;Pa&#39;</span><span class="p">,</span>
+                <span class="n">x_unit</span><span class="o">=</span><span class="s1">&#39;strain&#39;</span><span class="p">,</span>
+                <span class="n">x_name</span><span class="o">=</span><span class="s1">&#39;Strain&#39;</span><span class="p">,</span>
+                <span class="n">y_values</span> <span class="o">=</span> <span class="n">df_plastic</span><span class="o">.</span><span class="n">Stress</span><span class="p">,</span>
+                <span class="n">x_values</span> <span class="o">=</span> <span class="n">df_plastic</span><span class="o">.</span><span class="n">Strain</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Write-your-changes-to-Granta-MI">
+<h3>Write your changes to Granta MI<a class="headerlink" href="#Write-your-changes-to-Granta-MI" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">session</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">record</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;Record long name:Tensile analysis Thu Jul 15 16:21:13 2021&gt;]
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="05_Find_area_under_a_curve.html" class="btn btn-neutral float-right" title="Find the area under a curve" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="03_Fit_series_data_and_import.html" class="btn btn-neutral float-left" title="Fit series data and import fit results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; <a href="../../copyright.html">Copyright</a> 2021 ANSYS, Inc. or its affiliated companies. All rights reserved.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

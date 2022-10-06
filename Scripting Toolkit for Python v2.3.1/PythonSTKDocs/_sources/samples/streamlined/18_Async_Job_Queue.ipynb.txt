@@ -1,0 +1,373 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "# Asynchronous Job Queue\n",
+    "## Connect to MI\n",
+    "Connect to Granta MI and create an **AsyncJobQueue** object. This requires Granta MI Service Layer version 50 or later (shipped with Granta MI 2020 R2)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:26.149569Z",
+     "iopub.status.busy": "2021-07-15T09:54:26.148570Z",
+     "iopub.status.idle": "2021-07-15T09:54:27.300769Z",
+     "shell.execute_reply": "2021-07-15T09:54:27.301769Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from GRANTA_MIScriptingToolkit import granta as mpy\n",
+    "import datetime\n",
+    "import pathlib\n",
+    "\n",
+    "s = mpy.Session('http://localhost/mi_servicelayer', autologon=True)\n",
+    "job_queue = s.get_async_job_queue()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Get server information\n",
+    "You can request information about which actions you can perform, or the current configuration of the server."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:27.305771Z",
+     "iopub.status.busy": "2021-07-15T09:54:27.304769Z",
+     "iopub.status.idle": "2021-07-15T09:54:27.519216Z",
+     "shell.execute_reply": "2021-07-15T09:54:27.520221Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The current user is an administrator: True\n",
+      "The current user can write jobs: True\n",
+      "{'concurrency': 1,\n",
+      " 'polling_interval_in_milliseconds': 1000,\n",
+      " 'purge_interval_in_milliseconds': 86400000,\n",
+      " 'purge_job_age_in_milliseconds': 2592000000}\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"The current user is an administrator: {}\\nThe current user can write jobs: {}\"\n",
+    "      .format(job_queue.is_admin_user, job_queue.can_write_job))\n",
+    "print(job_queue.processing_configuration)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Create a new import job\n",
+    "Create import jobs using **ImportRequest** class objects. You can also set an (optional) execution date, deferring execution of your job into the future. \n",
+    "\n",
+    "Different job types require different input files. For example, an Excel import can use a 'template' and one or more 'data' files, or a single 'combined' file. These can be provided as relative or absolute paths, as\n",
+    "`pathlib.Path` objects, or as IO buffers (`fileIO` or `stringIO` for example)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:27.526223Z",
+     "iopub.status.busy": "2021-07-15T09:54:27.525223Z",
+     "iopub.status.idle": "2021-07-15T09:54:27.533523Z",
+     "shell.execute_reply": "2021-07-15T09:54:27.534462Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<TextImportJobRequest 'Text Import'>\n",
+      "<ExcelImportJobRequest 'Excel Import'>\n"
+     ]
+    }
+   ],
+   "source": [
+    "text_import_request = mpy.TextImportJobRequest(name='Text Import', description='An example text import job',\n",
+    "                                               data_files=['./text_import_data.txt', './text_import_data.RLT'],\n",
+    "                                               template_files=[pathlib.Path('./text_import_template.xml')])\n",
+    "\n",
+    "tomorrow = datetime.datetime.utcnow() + datetime.timedelta(days=1)\n",
+    "with open('./excel_importer.xlsx', 'rb') as fd:\n",
+    "     excel_import_request = mpy.ExcelImportJobRequest(name='Excel Import', description='An example excel import job',\n",
+    "                                                 \t  scheduled_execution_date=tomorrow, combined_files=[fd])\n",
+    "\n",
+    "print(text_import_request)\n",
+    "print(excel_import_request)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Submit jobs\n",
+    "Once a job is prepared it can be submitted to the server. At this point, you can choose to receive a reference to the running job, or wait until the job has completed or failed."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:27.538462Z",
+     "iopub.status.busy": "2021-07-15T09:54:27.537462Z",
+     "iopub.status.idle": "2021-07-15T09:54:39.114178Z",
+     "shell.execute_reply": "2021-07-15T09:54:39.115176Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<AsyncJob 'Text Import' status 'Succeeded'>\n",
+      "7116ea46-a173-40a3-9d85-f79555a4a33b\n",
+      "<AsyncJob 'Excel Import' status 'Pending'>"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "text_import_job = job_queue.create_import_job_and_wait(text_import_request)\n",
+    "print(text_import_job)\n",
+    "\n",
+    "job_id = text_import_job.id\n",
+    "print(job_id)\n",
+    "\n",
+    "excel_import_job = job_queue.create_import_job(excel_import_request)\n",
+    "print(excel_import_job)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Edit existing jobs\n",
+    "You can edit the properties of a running or completed job through the **AsyncJob** object. For example, a scheduled job can be brought forward, or you can change the name and description."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:39.126176Z",
+     "iopub.status.busy": "2021-07-15T09:54:39.124178Z",
+     "iopub.status.idle": "2021-07-15T09:54:39.357259Z",
+     "shell.execute_reply": "2021-07-15T09:54:39.358260Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[<AsyncJob 'Updated Excel Import' status 'Pending'>, <AsyncJob 'Text Import' status 'Succeeded'>]\n"
+     ]
+    }
+   ],
+   "source": [
+    "excel_import_job.update_name(\"Updated Excel Import\")\n",
+    "excel_import_job.update_description(\"A new description for an import job\")\n",
+    "excel_import_job.update_scheduled_execution_date_time(datetime.datetime.utcnow())\n",
+    "print(job_queue.jobs)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Retrieve long-running jobs\n",
+    "If your job may take a long time to complete, you can save the Job ID to disk and check its status later using the `AsyncJobQueue.get_job_by_id()` method. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:39.361259Z",
+     "iopub.status.busy": "2021-07-15T09:54:39.360258Z",
+     "iopub.status.idle": "2021-07-15T09:54:39.372733Z",
+     "shell.execute_reply": "2021-07-15T09:54:39.372733Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<AsyncJob 'Text Import' status 'Succeeded'>\n"
+     ]
+    }
+   ],
+   "source": [
+    "retrieved_job = job_queue.get_job_by_id(job_id)\n",
+    "print(retrieved_job)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:39.375730Z",
+     "iopub.status.busy": "2021-07-15T09:54:39.375730Z",
+     "iopub.status.idle": "2021-07-15T09:54:45.718210Z",
+     "shell.execute_reply": "2021-07-15T09:54:45.718210Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Succeeded\n"
+     ]
+    }
+   ],
+   "source": [
+    "import time\n",
+    "while excel_import_job.status not in ['Succeeded', 'Failed']:\n",
+    "\ttime.sleep(1)\n",
+    "\texcel_import_job.update()\n",
+    "\n",
+    "print(excel_import_job.status)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## View output files\n",
+    "Import jobs usually create log files - the exact kind of files generated varies between importers."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:45.724209Z",
+     "iopub.status.busy": "2021-07-15T09:54:45.723366Z",
+     "iopub.status.idle": "2021-07-15T09:54:46.354415Z",
+     "shell.execute_reply": "2021-07-15T09:54:46.354415Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'NumberOfTasks': 1, 'NumberOfRecordsNotImported': 0, 'NumberOfErrors': 0, 'NumberOfRecordsCreated': 4, 'NumberOfRecordsUpdated': 0, 'FinishedSuccessfully': True, 'ImportErrors': []}\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['C:\\\\ProgramData\\\\Granta\\\\GRANTA MI\\\\JobQueueRoot\\\\output\\\\7116ea46-a173-40a3-9d85-f79555a4a33b\\\\summary.json', 'C:\\\\ProgramData\\\\Granta\\\\GRANTA MI\\\\JobQueueRoot\\\\output\\\\7116ea46-a173-40a3-9d85-f79555a4a33b\\\\Text Import.log']\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(excel_import_job.get_file_content(excel_import_job.output_file_names[0]))\n",
+    "output_path = pathlib.Path('./output.log')\n",
+    "excel_import_job.download_file(excel_import_job.output_file_names[1], output_path)\n",
+    "\n",
+    "print(text_import_job.output_file_names)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Manage the Job Queue\n",
+    "You can also delete jobs or promote them to the top of the queue, if you have the correct permissions."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2021-07-15T09:54:46.358415Z",
+     "iopub.status.busy": "2021-07-15T09:54:46.358415Z",
+     "iopub.status.idle": "2021-07-15T09:54:46.416144Z",
+     "shell.execute_reply": "2021-07-15T09:54:46.417142Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[<AsyncJob 'Text Import' status 'Succeeded'>, <AsyncJob 'Updated Excel Import' status 'Succeeded'>]\n"
+     ]
+    }
+   ],
+   "source": [
+    "\"\"\"\n",
+    "# Uncomment this code to clear the job queue\n",
+    "job_queue.delete_jobs(job_queue.jobs)\n",
+    "\"\"\"\n",
+    "print(job_queue.jobs)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}
