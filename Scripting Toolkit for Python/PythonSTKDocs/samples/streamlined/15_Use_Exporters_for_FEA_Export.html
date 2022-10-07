@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Export data for FEA &mdash; MI Scripting Toolkit for Python 3.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/Materials.png"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="next" title="Link Records" href="16_Link_Records.html" />
+    <link rel="prev" title="Create and Edit Tabular Data" href="14_Create_and_Edit_Tabular_Data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/Materials-STK.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">What’s new in Version 3.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../upgrading.html">Upgrading from earlier versions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../stream_example.html">Streamlined API Example Notebooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_Get_Started.html">Get Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_Get_Attributes.html">Get Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_Browse_MI.html">Browse Granta MI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_Search_MI.html">Search Granta MI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_Fetch_Attribute_Data_in_Bulk.html">Fetch Attribute Data in Bulk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_Edit_Data.html">Edit Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_Create_Records.html">Create Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07_Import_Functional_Data.html">Import Functional Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_Create_Functional_Data.html">Create Functional Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09_Edit_Tabular_Data.html">Edit Tabular Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_Edit_Pseudo-attributes.html">Edit Pseudo-attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_Add_Files_Pictures_and_Hyperlinks.html">Add Files, Pictures, and Hyperlinks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_Add_Point_Range_Data.html">Add Point and Range data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13_Add_Date_Integer_and_Logical_Data.html">Add Date, Integer and Logical data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14_Create_and_Edit_Tabular_Data.html">Create and Edit Tabular Data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Export data for FEA</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Find-exporters">Find exporters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Working-with-parameters">Working with parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="16_Link_Records.html">Link Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17_Layouts.html">Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="18_Async_Job_Queue.html">Asynchronous Job Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="19_Streamlined_API_performance_tuning.html">Streamlined API performance tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20_Using_OIDC_With_the_STK.html">Using OpenID Connect with MI Scripting Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="21_Logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="22_Storing_credentials_securely.html">Storing Credentials Securely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_analytics.html">Data Analytics Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MI Scripting Toolkit for Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../stream_example.html">Streamlined API Example Notebooks</a> &raquo;</li>
+      <li>Export data for FEA</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<a href="../../samples\streamlined\15_Use_Exporters_for_FEA_Export.ipynb" id='example' type="application/octet-stream" download>
+View the .ipynb file.
+</a><hr class="docutils" />
+<section id="Export-data-for-FEA">
+<h1>Export data for FEA<a class="headerlink" href="#Export-data-for-FEA" title="Permalink to this headline"></a></h1>
+<p>Use MI exporters to export records for use with FEA, CAE or CAD packages.</p>
+<section id="Find-exporters">
+<h2>Find exporters<a class="headerlink" href="#Find-exporters" title="Permalink to this headline"></a></h2>
+<p>Check which exporters are available for a specific table.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">GRANTA_MIScriptingToolkit</span> <span class="kn">import</span> <span class="n">granta</span> <span class="k">as</span> <span class="n">mpy</span>
+
+<span class="n">mi</span> <span class="o">=</span> <span class="n">mpy</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;http://localhost/mi_servicelayer&#39;</span><span class="p">,</span> <span class="n">autologon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span><span class="n">db_key</span><span class="o">=</span><span class="s1">&#39;MI_Training&#39;</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;Design Data&#39;</span><span class="p">)</span>
+
+<span class="n">exporters_in_table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">get_available_exporters</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;ANSYS Workbench&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Output of available ANSYS Workbench Exporters&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">exporter</span> <span class="ow">in</span> <span class="n">exporters_in_table</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> (</span><span class="si">{1}</span><span class="s2">) - </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exporter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exporter</span><span class="o">.</span><span class="n">package</span><span class="p">,</span> <span class="n">exporter</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Output of available ANSYS Workbench Exporters
+458E9A7E-C268-4ED0-9CC1-FF7438521B4F (ANSYS Workbench) - Exports linear, temperature-independent, isotropic data to the Ansys Workbench format
+CE8DCFA2-B3EE-4545-8D3E-82810FA92AFC (ANSYS Workbench) - Exports linear, temperature-dependent, isotropic data to the Ansys Workbench format
+4B0B1EA3-8760-43DF-8060-2C79CA471D4C (ANSYS Workbench) - Exports linear, temperature-independent, isotropic with simple failure data to the Ansys Workbench format
+</pre></div></div>
+</div>
+<p>Check which exporters are applicable to a specific record.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rec</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">search_for_records_by_name</span><span class="p">(</span><span class="s1">&#39;250 Grade Maraging, Maraged at 900F, Plate, Thickness: 0.1875 to 0.251 in, AMS 6520, S basis&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">applicable_exporters</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">get_available_exporters</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Output of exporters for 250 Grade Maraging steel:&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">exporter</span> <span class="ow">in</span> <span class="n">applicable_exporters</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> (</span><span class="si">{1}</span><span class="s2">) - </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exporter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                   <span class="n">exporter</span><span class="o">.</span><span class="n">package</span><span class="p">,</span>
+                                   <span class="n">exporter</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Output of exporters for 250 Grade Maraging steel:
+71CE1C21-FDEA-4119-B481-81BDC41BD900 (Abaqus 6) - Exports temperature dependent, isotropic data to the Abaqus format.
+5C560880-4FD3-4E5C-992B-4B6CEF6A055A (Abaqus 6) - Exports temperature independent, isotropic data to the Abaqus 6 format.
+911AF055-B388-439A-8AF6-EB18480E2D80 (Abaqus 6) - Linear, temperature-independent, isotropic, simple failure
+3AE2BEA5-B1DB-45D3-A431-48915B8D1317 (Abaqus 6) - Linear, temperature-independent, isotropic, simple failure with thermal expansion
+722E5C46-3633-4B72-BF93-74E8112C20C3 (Abaqus 6) - Exports temperature dependent, isotropic data to the Abaqus 6 format.
+B653C213-8BEB-42A7-8512-5F340EEBFAB4 (Abaqus 6) - Exports temperature independent, isotropic data to the Abaqus 6 format.
+458E9A7E-C268-4ED0-9CC1-FF7438521B4F (ANSYS Workbench) - Exports linear, temperature-independent, isotropic data to the Ansys Workbench format
+CE8DCFA2-B3EE-4545-8D3E-82810FA92AFC (ANSYS Workbench) - Exports linear, temperature-dependent, isotropic data to the Ansys Workbench format
+4B0B1EA3-8760-43DF-8060-2C79CA471D4C (ANSYS Workbench) - Exports linear, temperature-independent, isotropic with simple failure data to the Ansys Workbench format
+</pre></div></div>
+</div>
+</section>
+<section id="Working-with-parameters">
+<h2>Working with parameters<a class="headerlink" href="#Working-with-parameters" title="Permalink to this headline"></a></h2>
+<p>Some exporters support parameters. The exported parameters have default values but they can also be set manually.</p>
+<p>Get the required parameters for an exporter.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">exporter_to_use</span> <span class="o">=</span> <span class="n">rec</span><span class="o">.</span><span class="n">get_available_exporters</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s2">&quot;Abaqus 6&quot;</span><span class="p">,</span>
+                                              <span class="n">model</span><span class="o">=</span><span class="s2">&quot;Linear, temperature-dependent, isotropic, thermal, plastic&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">parameters_required</span> <span class="o">=</span> <span class="n">exporter_to_use</span><span class="o">.</span><span class="n">get_parameters_required_for_export</span><span class="p">([</span><span class="n">rec</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">parameters_required</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;Time&#39;: &lt;ParameterDefinition name: Time, type: Unrestricted numeric, unit: hr&gt;}
+</pre></div></div>
+</div>
+<p>Set the parameter values and perform the export to obtain the material card for use with FEA software. Provide one or more records to the exporter, up to the maximum number specified in the exporter configuration file. The records will be exported to the same material card.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">parameter_values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Time&quot;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">parameter_name</span> <span class="ow">in</span> <span class="n">parameters_required</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">parameters_required</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span><span class="o">.</span><span class="n">value_for_exporters</span> <span class="o">=</span> <span class="n">parameter_values</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span>
+
+<span class="n">material_card</span> <span class="o">=</span> <span class="n">exporter_to_use</span><span class="o">.</span><span class="n">run_exporter</span><span class="p">([</span><span class="n">rec</span><span class="p">],</span> <span class="n">parameter_defs</span><span class="o">=</span><span class="n">parameters_required</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">material_card</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+**
+**Granta Material Name: 250 Grade Maraging, Maraged at 900F, Plate, Thickness: 0.1875 to 0.251 in, AMS 6520, S basis
+**Model Type: Linear, temperature-dependent, isotropic, thermal, plastic
+**Unit System: SI (Consistent)
+**Export User: DOMAIN\username
+**Export DateTime: 2022-05-10T22:02:12.7120457+00:00
+**Database Name: MI Training
+**Table Name: Design Data
+**Material Record History Id: 20673
+**Density: 7.92e+3 kg/m^3
+**Thermal conductivity with temperature: 37 datapoints W/m.°C
+**Thermal expansion coefficient with temperature: 103 datapoints strain/°C
+**Tensile strength, yield with temperature: 0 datapoints Pa
+**Tensile modulus with temperature: 0 datapoints Pa
+**Poissons ratio: 3.10e-1
+**Thermal diffusivity with temperature: [No Value]
+**
+**Comments
+**
+**LinearIsoTempThermalPlastic.xslt: Transformed CAE material model data
+**(Linear, temperature-dependent, isotropic, thermal, plastic) to Abaqus 6 format.
+**
+**
+*MATERIAL, NAME = A250_Grade_Maraging_Maraged_at
+**
+*DENSITY
+7.92e+3
+**
+**
+**ELASTIC
+** [No Value]
+**
+**PLASTIC
+** [No Value]
+**
+*EXPANSION, ZERO=2.93e+2
+5.41e-6, 1.09e+1
+5.58e-6, 2.20e+1
+5.75e-6, 3.32e+1
+5.92e-6, 4.43e+1
+6.09e-6, 5.54e+1
+6.25e-6, 6.65e+1
+6.41e-6, 7.76e+1
+6.57e-6, 8.87e+1
+6.73e-6, 9.98e+1
+6.88e-6, 1.11e+2
+7.03e-6, 1.22e+2
+7.17e-6, 1.33e+2
+7.31e-6, 1.44e+2
+7.45e-6, 1.55e+2
+7.58e-6, 1.66e+2
+7.71e-6, 1.78e+2
+7.83e-6, 1.89e+2
+7.95e-6, 2.00e+2
+8.07e-6, 2.11e+2
+8.18e-6, 2.22e+2
+8.30e-6, 2.33e+2
+8.40e-6, 2.44e+2
+8.51e-6, 2.55e+2
+8.61e-6, 2.66e+2
+8.71e-6, 2.78e+2
+8.81e-6, 2.89e+2
+8.91e-6, 3.00e+2
+9.00e-6, 3.11e+2
+9.10e-6, 3.22e+2
+9.19e-6, 3.33e+2
+9.28e-6, 3.44e+2
+9.36e-6, 3.55e+2
+9.45e-6, 3.66e+2
+9.53e-6, 3.78e+2
+9.61e-6, 3.89e+2
+9.69e-6, 4.00e+2
+9.77e-6, 4.11e+2
+9.84e-6, 4.22e+2
+9.91e-6, 4.33e+2
+9.98e-6, 4.44e+2
+1.01e-5, 4.55e+2
+1.01e-5, 4.66e+2
+1.02e-5, 4.78e+2
+1.02e-5, 4.89e+2
+1.03e-5, 5.00e+2
+1.03e-5, 5.11e+2
+1.04e-5, 5.22e+2
+1.04e-5, 5.33e+2
+1.05e-5, 5.44e+2
+1.05e-5, 5.55e+2
+1.06e-5, 5.66e+2
+1.06e-5, 5.78e+2
+1.06e-5, 5.89e+2
+1.07e-5, 6.00e+2
+1.07e-5, 6.11e+2
+1.07e-5, 6.22e+2
+1.07e-5, 6.33e+2
+1.07e-5, 6.44e+2
+1.08e-5, 6.55e+2
+1.08e-5, 6.66e+2
+1.08e-5, 6.78e+2
+1.08e-5, 6.89e+2
+1.08e-5, 7.00e+2
+1.08e-5, 7.11e+2
+1.08e-5, 7.22e+2
+1.08e-5, 7.33e+2
+1.08e-5, 7.44e+2
+1.08e-5, 7.55e+2
+1.08e-5, 7.66e+2
+1.08e-5, 7.78e+2
+1.08e-5, 7.89e+2
+1.08e-5, 8.00e+2
+1.07e-5, 8.11e+2
+1.07e-5, 8.22e+2
+1.06e-5, 8.33e+2
+1.06e-5, 8.44e+2
+1.05e-5, 8.55e+2
+1.04e-5, 8.66e+2
+1.02e-5, 8.78e+2
+1.00e-5, 8.89e+2
+9.86e-6, 9.00e+2
+9.66e-6, 9.11e+2
+9.45e-6, 9.22e+2
+9.24e-6, 9.33e+2
+9.03e-6, 9.44e+2
+8.84e-6, 9.55e+2
+8.68e-6, 9.66e+2
+8.54e-6, 9.78e+2
+8.42e-6, 9.89e+2
+8.34e-6, 1.00e+3
+8.28e-6, 1.01e+3
+8.25e-6, 1.02e+3
+8.25e-6, 1.03e+3
+8.27e-6, 1.04e+3
+8.31e-6, 1.06e+3
+8.37e-6, 1.07e+3
+8.44e-6, 1.08e+3
+8.54e-6, 1.09e+3
+8.66e-6, 1.10e+3
+8.82e-6, 1.11e+3
+9.02e-6, 1.12e+3
+9.29e-6, 1.13e+3
+9.67e-6, 1.14e+3
+**
+**
+*CONDUCTIVITY
+2.51e+1, 3.00e+2
+2.54e+1, 3.11e+2
+2.56e+1, 3.22e+2
+2.59e+1, 3.33e+2
+2.62e+1, 3.44e+2
+2.65e+1, 3.55e+2
+2.67e+1, 3.66e+2
+2.70e+1, 3.78e+2
+2.73e+1, 3.89e+2
+2.75e+1, 4.00e+2
+2.78e+1, 4.11e+2
+2.80e+1, 4.22e+2
+2.83e+1, 4.33e+2
+2.85e+1, 4.44e+2
+2.87e+1, 4.55e+2
+2.89e+1, 4.66e+2
+2.91e+1, 4.78e+2
+2.93e+1, 4.89e+2
+2.94e+1, 5.00e+2
+2.96e+1, 5.11e+2
+2.98e+1, 5.22e+2
+2.99e+1, 5.33e+2
+3.00e+1, 5.44e+2
+3.02e+1, 5.55e+2
+3.03e+1, 5.66e+2
+3.04e+1, 5.78e+2
+3.05e+1, 5.89e+2
+3.05e+1, 6.00e+2
+3.06e+1, 6.11e+2
+3.07e+1, 6.22e+2
+3.08e+1, 6.33e+2
+3.08e+1, 6.44e+2
+3.09e+1, 6.55e+2
+3.09e+1, 6.66e+2
+3.10e+1, 6.78e+2
+3.10e+1, 6.89e+2
+3.11e+1, 7.00e+2
+**
+**
+**SPECIFIC HEAT
+** [No Value]
+*NODE
+1, 0.0, 0.0, 0.0
+*ELEMENT, TYPE=CPE4, ELSET=EALL
+1, 1, 2, 5, 4
+
+</pre></div></div>
+</div>
+<p>Save the exported data using the settings provided in the .exp file. The filename, extension, and file encoding scheme are left as their defaults.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path_to_save</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;Example_Export&#39;</span>
+<span class="n">exporter_to_use</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path_to_save</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;Example_Export&quot;</span><span class="p">)</span>
+<span class="n">file_extension</span> <span class="o">=</span> <span class="n">exporter_to_use</span><span class="o">.</span><span class="n">default_file_extension</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exporter output saved to </span><span class="se">\&quot;</span><span class="si">{}{}</span><span class="s2">.</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path_to_save</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">file_extension</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Exporter output saved to &#34;./Example_Export.inp&#34;
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="14_Create_and_Edit_Tabular_Data.html" class="btn btn-neutral float-left" title="Create and Edit Tabular Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="16_Link_Records.html" class="btn btn-neutral float-right" title="Link Records" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="../../copyright.html">Copyright</a> 2022 ANSYS, Inc. or its affiliated companies. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

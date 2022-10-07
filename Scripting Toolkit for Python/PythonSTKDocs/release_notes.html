@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What’s new in Version 3.0 &mdash; MI Scripting Toolkit for Python 3.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/Materials.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Upgrading from earlier versions" href="upgrading.html" />
+    <link rel="prev" title="Welcome" href="welcome.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html">
+            <img src="_static/Materials-STK.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                3.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What’s new in Version 3.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#streamlined-api-enhancements-and-bug-fixes">Streamlined API enhancements and bug fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#more-consistent-access-to-data-across-the-mi-scripting-toolkit">More consistent access to data across the MI Scripting Toolkit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-datetime-pseudo-attributes-in-search-criteria">Use datetime pseudo-attributes in search criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-data-analytics-scripts">Example data analytics scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-fixes">Additional fixes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#foundation-api-enhancements-and-bug-fixes">Foundation API enhancements and bug fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backwards-incompatible-api-changes">Backwards incompatible API changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading from earlier versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stream_example.html">Streamlined API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stream_api.html">Streamlined API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundation_example.html">Foundation API Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRANTA_MIScriptingToolkit.html">Foundation API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analytics.html">Data Analytics Example Notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log_files.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright and Trademark Information</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MI Scripting Toolkit for Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>What’s new in Version 3.0</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="what-s-new-in-version-3-0">
+<span id="release-notes"></span><h1>What’s new in Version 3.0<a class="headerlink" href="#what-s-new-in-version-3-0" title="Permalink to this headline"></a></h1>
+<p>Key features introduced or improved in MI Scripting Toolkit for Python 3.0.</p>
+<section id="streamlined-api-enhancements-and-bug-fixes">
+<h2>Streamlined API enhancements and bug fixes<a class="headerlink" href="#streamlined-api-enhancements-and-bug-fixes" title="Permalink to this headline"></a></h2>
+<section id="more-consistent-access-to-data-across-the-mi-scripting-toolkit">
+<h3>More consistent access to data across the MI Scripting Toolkit<a class="headerlink" href="#more-consistent-access-to-data-across-the-mi-scripting-toolkit" title="Permalink to this headline"></a></h3>
+<p>This release includes a re-structure of several <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeValue</span></code> classes, which simplifies data access by uniformly
+adopting the <code class="docutils literal notranslate"><span class="pre">.value</span></code> property. <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeValue.value</span></code> now returns data for point, functional, tabular, binary and
+hyperlink attributes where previously the property either did not exist, or returned an instance of the class itself.</p>
+<p>To further improve usability, <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributePoint.value</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeDiscrete.value</span></code> now return a single value
+for single-valued attributes and a list of values for multi-valued attributes.</p>
+</section>
+<section id="use-datetime-pseudo-attributes-in-search-criteria">
+<h3>Use datetime pseudo-attributes in search criteria<a class="headerlink" href="#use-datetime-pseudo-attributes-in-search-criteria" title="Permalink to this headline"></a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Record</span></code> pseudo-attributes <code class="docutils literal notranslate"><span class="pre">modifiedDate</span></code>, <code class="docutils literal notranslate"><span class="pre">createdDate</span></code> and <code class="docutils literal notranslate"><span class="pre">releasedDate</span></code> now return time as well as date.
+These pseudo-attributes can be searched, and will affect the <code class="docutils literal notranslate"><span class="pre">min_max</span></code> property.</p>
+</section>
+<section id="example-data-analytics-scripts">
+<h3>Example data analytics scripts<a class="headerlink" href="#example-data-analytics-scripts" title="Permalink to this headline"></a></h3>
+<p>As well as example scripts for common operations using the Streamlined and Foundation APIs, the MI Scripting Toolkit now
+includes <span class="xref std std-ref">data_analytics</span>.</p>
+<p>The new scripts cover:</p>
+<ul class="simple">
+<li><p>Plotting and comparing data from records.</p></li>
+<li><p>Processing datasets and importing calculated values.</p></li>
+<li><p>Fitting series data to linear and non-linear models.</p></li>
+<li><p>Creating statistical summaries (roll-ups) for groups of records or functional attributes.</p></li>
+<li><p>Comparing test data to specification values.</p></li>
+<li><p>Finding the area under a curve.</p></li>
+</ul>
+</section>
+<section id="additional-fixes">
+<h3>Additional fixes<a class="headerlink" href="#additional-fixes" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Added tabular data options to improve performance:</dt><dd><ul>
+<li><p>To only export and process tabular data relevant to your script, set individual columns in an <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeDefinitionTabular</span></code> object to be ignored.</p></li>
+<li><p>Ignore linked records when fetching and processing tabular data. The linked values are still exported, but the linked records are not.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Records can now be removed from all subsets at once by setting <code class="xref py py-attr docutils literal notranslate"><span class="pre">Record.subsets</span></code> to empty.</p></li>
+<li><p>The password for a session is now stored on the <code class="xref py py-obj docutils literal notranslate"><span class="pre">Session</span></code> object, allowing it to persist for the entirety of the script.</p></li>
+<li><p>Fixed an issue where <code class="docutils literal notranslate"><span class="pre">search_for_records_where()</span></code> with date criteria incorrectly returned no results.</p></li>
+<li><p>You can now specify whether <code class="docutils literal notranslate"><span class="pre">bulk_link_fetch()</span></code> fetches records based on the current table’s named subsets, or does not filter on subsets at all.</p></li>
+</ul>
+</section>
+</section>
+<section id="foundation-api-enhancements-and-bug-fixes">
+<h2>Foundation API enhancements and bug fixes<a class="headerlink" href="#foundation-api-enhancements-and-bug-fixes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>The Foundation API has been updated to use MI Service Layer Interface 20/05, this requires Granta MI 2021 R1 or newer.</p></li>
+<li><p>Standard names are now returned in <code class="xref py py-class docutils literal notranslate"><span class="pre">GRANTA_MIScriptingToolkit.GetRecordAttributesByRef</span></code> responses.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GRANTA_MIScriptingToolkit.GetAttributeDetails</span></code> now only returns minimum and maximum values if they exist.</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">GRANTA_MISession.TestConnection()</span></code> now errors if an invalid access or refresh token is provided.</p></li>
+</ul>
+</section>
+<section id="backwards-incompatible-api-changes">
+<h2>Backwards incompatible API changes<a class="headerlink" href="#backwards-incompatible-api-changes" title="Permalink to this headline"></a></h2>
+<p>This major release of MI Scripting Toolkit uses a later version of the Service Layer Interface than previous releases. Granta MI 2021 R1
+or later is now required.</p>
+<p>Scripts written for Version 2.3 or earlier will need to be modified to take into account the following changes:</p>
+<ul class="simple">
+<li><p>Passwords are now stored on <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>. The new <code class="docutils literal notranslate"><span class="pre">stored_password</span></code> option is required for bulk operations.</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">AttributeValue.value</span></code> behavior of multiple attribute types has changed, and <code class="xref py py-attr docutils literal notranslate"><span class="pre">AttributePoint.points</span></code> has been deprecated.</p></li>
+</ul>
+<p>Scripts written for Version 2.0 or earlier may need to account for additional changes.</p>
+<p>See the <a class="reference internal" href="upgrading.html#upgrading"><span class="std std-ref">Upgrading from earlier versions</span></a> page for full details of breaking changes across all versions, or any pending deprecations.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="welcome.html" class="btn btn-neutral float-left" title="Welcome" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading from earlier versions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2022 ANSYS, Inc. or its affiliated companies. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

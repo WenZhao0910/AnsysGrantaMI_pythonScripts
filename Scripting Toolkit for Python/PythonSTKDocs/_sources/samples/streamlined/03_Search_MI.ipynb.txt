@@ -1,0 +1,880 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Search Granta MI\n",
+    "Use the three available search methods to search for records."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All three methods can be performed at either the Session, Database, or Table levels:\n",
+    "\n",
+    "* Simple text search\n",
+    "* Record name search\n",
+    "* Criteria search"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Connect to MI"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:31:52.605932Z",
+     "iopub.status.busy": "2022-05-10T21:31:52.605932Z",
+     "iopub.status.idle": "2022-05-10T21:31:56.829903Z",
+     "shell.execute_reply": "2022-05-10T21:31:56.829903Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "from GRANTA_MIScriptingToolkit import granta as mpy\n",
+    "mi = mpy.connect('http://localhost/mi_servicelayer', autologon=True)\n",
+    "db = mi.get_db(db_key='MI_Training')\n",
+    "material_universe = db.get_table('MaterialUniverse', unit_system='UK Imperial', absolute_temperatures=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Simple text search\n",
+    "Search for records which contain the string anywhere in the record."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:31:56.829903Z",
+     "iopub.status.busy": "2022-05-10T21:31:56.829903Z",
+     "iopub.status.idle": "2022-05-10T21:31:58.349913Z",
+     "shell.execute_reply": "2022-05-10T21:31:58.349913Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Low alloy steel, AISI 4130, air melted, normalized>]"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "normalized_material_records = material_universe.search_for_records_by_text('Normalized')\n",
+    "normalized_material_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Record name search\n",
+    "Search for records by name. Only exact matches to the long or short name of a record are returned."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:31:58.359913Z",
+     "iopub.status.busy": "2022-05-10T21:31:58.359913Z",
+     "iopub.status.idle": "2022-05-10T21:31:58.529915Z",
+     "shell.execute_reply": "2022-05-10T21:31:58.529915Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Soda barium glass>]"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "sodium_barium_glass_records = material_universe.search_for_records_by_name('Soda barium glass')\n",
+    "sodium_barium_glass_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Criteria searches\n",
+    "Search criteria are constructed from **AttributeDefinition** objects using the `search_criterion()` method.\n",
+    "\n",
+    "This search type is typically used in 7 different scenarios:\n",
+    "\n",
+    "* Text searches\n",
+    "* Numeric searches\n",
+    "* Date searches\n",
+    "* Boolean searches\n",
+    "* Tabular searches\n",
+    "* Searching for the presence of any value\n",
+    "* Combining search criteria\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Text searches\n",
+    "In these examples, the criteria are that the attribute *Base* in the *MaterialUniverse* table:\n",
+    "\n",
+    "* Contains iron (`contains=`)\n",
+    "* Does not contain iron (`does_not_contain=`)\n",
+    "* Contains one of three specified metals (`contains_any=`)\n",
+    "* Contains all three specified metals (`contains_all=`)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:31:58.529915Z",
+     "iopub.status.busy": "2022-05-10T21:31:58.529915Z",
+     "iopub.status.idle": "2022-05-10T21:32:07.578657Z",
+     "shell.execute_reply": "2022-05-10T21:32:07.578657Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "base_attribute = material_universe.attributes['Base']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All materials that contain Iron:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:07.578657Z",
+     "iopub.status.busy": "2022-05-10T21:32:07.578657Z",
+     "iopub.status.idle": "2022-05-10T21:32:07.588655Z",
+     "shell.execute_reply": "2022-05-10T21:32:07.588655Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<SearchCriterion: Base - CONTAINS - 'Fe (Iron)'>"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "base_contains_iron = base_attribute.search_criterion(contains='Fe (Iron)')\n",
+    "base_contains_iron"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:07.588655Z",
+     "iopub.status.busy": "2022-05-10T21:32:07.588655Z",
+     "iopub.status.idle": "2022-05-10T21:32:09.299058Z",
+     "shell.execute_reply": "2022-05-10T21:32:09.299058Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Low alloy steel, AISI 4130, air melted, quenched & tempered>,\n",
+       " <Record long name:250 maraging steel, maraged at 900F>,\n",
+       " <Record long name:Low alloy steel, AISI 4130, air melted, normalized>]"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "iron_records = material_universe.search_for_records_where([base_contains_iron])\n",
+    "iron_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All materials that **do not** contain Iron:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:09.299058Z",
+     "iopub.status.busy": "2022-05-10T21:32:09.299058Z",
+     "iopub.status.idle": "2022-05-10T21:32:11.019069Z",
+     "shell.execute_reply": "2022-05-10T21:32:11.019069Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Ceramics and glasses>,\n",
+       " <Record long name:Soda barium glass>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T73>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, aged>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, annealed, generic>]"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "base_does_not_contain_iron = base_attribute.search_criterion(does_not_contain='Fe (Iron)')\n",
+    "iron_free_records = material_universe.search_for_records_where([base_does_not_contain_iron])\n",
+    "iron_free_records[:5]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All materials that contain **one of** Iron, Aluminum **or** Titanium:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:11.019069Z",
+     "iopub.status.busy": "2022-05-10T21:32:11.019069Z",
+     "iopub.status.idle": "2022-05-10T21:32:11.679078Z",
+     "shell.execute_reply": "2022-05-10T21:32:11.679078Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Low alloy steel, AISI 4130, air melted, quenched & tempered>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T73>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, aged>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, annealed, generic>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, solution treated & aged>,\n",
+       " <Record long name:250 maraging steel, maraged at 900F>,\n",
+       " <Record long name:Low alloy steel, AISI 4130, air melted, normalized>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T6>]"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "base_contains_any_metal = base_attribute.search_criterion(contains_any=['Fe (Iron)', 'Al (Aluminum)', 'Ti (Titanium)'])\n",
+    "base_any_metal_records = material_universe.search_for_records_where([base_contains_any_metal])\n",
+    "base_any_metal_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All materials that contain Iron, Aluminum **and** Titanium:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:11.679078Z",
+     "iopub.status.busy": "2022-05-10T21:32:11.679078Z",
+     "iopub.status.idle": "2022-05-10T21:32:12.139079Z",
+     "shell.execute_reply": "2022-05-10T21:32:12.139079Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[]"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "base_contains_all_metals = base_attribute.search_criterion(contains_all=['Fe (Iron)', 'Al (Aluminum)', 'Ti (Titanium)'])\n",
+    "base_all_metals_records = material_universe.search_for_records_where([base_contains_all_metals])\n",
+    "base_all_metals_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Numeric searches\n",
+    "In this example, the criteria are that the attribute *Yield Strength, L* in the *Design Data* table is either greater than or less than 145 ksi."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:12.139079Z",
+     "iopub.status.busy": "2022-05-10T21:32:12.139079Z",
+     "iopub.status.idle": "2022-05-10T21:32:15.355925Z",
+     "shell.execute_reply": "2022-05-10T21:32:15.355925Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "design_data = db.get_table('Design Data', unit_system='UK Imperial', absolute_temperatures=False)\n",
+    "yield_strength_l_attribute = design_data.attributes['Yield Strength, L']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Materials with a *Yield Strength* **less than** 145 ksi:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:15.355925Z",
+     "iopub.status.busy": "2022-05-10T21:32:15.355925Z",
+     "iopub.status.idle": "2022-05-10T21:32:15.999138Z",
+     "shell.execute_reply": "2022-05-10T21:32:15.999138Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Titanium alloys, Ti-6Al-4V>]"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "yield_strength_l_attribute.unit\n",
+    "low_yield_strength = yield_strength_l_attribute.search_criterion(less_than=145.0)\n",
+    "low_yield_strength_records = design_data.search_for_records_where([low_yield_strength])\n",
+    "low_yield_strength_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Materials with a *Yield Strength* **greater than** 145 ksi:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:15.999138Z",
+     "iopub.status.busy": "2022-05-10T21:32:15.999138Z",
+     "iopub.status.idle": "2022-05-10T21:32:16.533767Z",
+     "shell.execute_reply": "2022-05-10T21:32:16.533767Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Nickel alloys, Inconel 718, Forging>,\n",
+       " <Record long name:250 Grade Maraging, Maraged at 900F, Plate, Thickness: 0.1875 to 0.251 in, AMS 6520, S basis>]"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "high_yield_strength = yield_strength_l_attribute.search_criterion(greater_than=145.0)\n",
+    "high_yield_strength_records = design_data.search_for_records_where([high_yield_strength])\n",
+    "high_yield_strength_records"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Date searches\n",
+    "In this example, the search is for records in the *Legislation and Lists* table with an *Effective Date* between 1970 and 2000."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:16.533767Z",
+     "iopub.status.busy": "2022-05-10T21:32:16.533767Z",
+     "iopub.status.idle": "2022-05-10T21:32:16.871611Z",
+     "shell.execute_reply": "2022-05-10T21:32:16.871611Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "legislations = db.get_table('Legislations and Lists', unit_system='UK Imperial', absolute_temperatures=False)\n",
+    "effective_date_attribute = legislations.attributes['Effective date']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:16.871611Z",
+     "iopub.status.busy": "2022-05-10T21:32:16.871611Z",
+     "iopub.status.idle": "2022-05-10T21:32:17.511682Z",
+     "shell.execute_reply": "2022-05-10T21:32:17.511682Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:TSCA Section 6>]"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import datetime\n",
+    "start_date = datetime.datetime(1970, 1, 1)\n",
+    "end_date = datetime.datetime(2000, 1, 1)\n",
+    "effective_date_1970_2000 = effective_date_attribute.search_criterion(between_dates=(start_date, end_date))\n",
+    "legislations_1970_2000 = legislations.search_for_records_where([effective_date_1970_2000])\n",
+    "legislations_1970_2000"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Boolean searches\n",
+    "Search for records with a certain Boolean value. In this example, the search is for all materials where RoHS compliant grades are available."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:17.511682Z",
+     "iopub.status.busy": "2022-05-10T21:32:17.511682Z",
+     "iopub.status.idle": "2022-05-10T21:32:18.081934Z",
+     "shell.execute_reply": "2022-05-10T21:32:18.081934Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Soda barium glass>,\n",
+       " <Record long name:Low alloy steel, AISI 4130, air melted, quenched & tempered>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T73>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, aged>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, annealed, generic>]"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "RoHS_grades_attribute = material_universe.attributes['RoHS (EU) compliant grades?']\n",
+    "\n",
+    "RoHS_grades_true = RoHS_grades_attribute.search_criterion(contains=True)\n",
+    "materials_with_rohs_grades = material_universe.search_for_records_where([RoHS_grades_true])\n",
+    "materials_with_rohs_grades[:5]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Combining criteria\n",
+    "The `search_for_records_where` method takes a list of criteria, allowing criteria to be combined as long as they relate to attributes in the same table."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:18.081934Z",
+     "iopub.status.busy": "2022-05-10T21:32:18.081934Z",
+     "iopub.status.idle": "2022-05-10T21:32:18.571940Z",
+     "shell.execute_reply": "2022-05-10T21:32:18.571940Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Low alloy steel, AISI 4130, air melted, quenched & tempered>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T73>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, aged>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, annealed, generic>,\n",
+       " <Record long name:250 maraging steel, maraged at 900F>,\n",
+       " <Record long name:Low alloy steel, AISI 4130, air melted, normalized>,\n",
+       " <Record long name:Titanium, alpha-beta alloy, Ti-6Al-4V, solution treated & aged>,\n",
+       " <Record long name:Aluminum, 7075, wrought, T6>]"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "metals_with_rohs_grades = material_universe.search_for_records_where([base_contains_any_metal, RoHS_grades_true])\n",
+    "metals_with_rohs_grades"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Searching for the existence of data\n",
+    "We can also define criteria that search for records which have *any* value for the specified attribute, with no restriction on the data."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:18.571940Z",
+     "iopub.status.busy": "2022-05-10T21:32:18.571940Z",
+     "iopub.status.idle": "2022-05-10T21:32:19.501941Z",
+     "shell.execute_reply": "2022-05-10T21:32:19.501941Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:Dibutyl phthalate [84-74-2]>,\n",
+       " <Record long name:Bis (2-ethyl(hexyl)phthalate) (DEHP) [117-81-7]>,\n",
+       " <Record long name:Alkanes, C10-13, chloro;  (Short chain chlorinated paraffins ) [85535-84-8]>,\n",
+       " <Record long name:Potassium chromate [7789-00-6]>,\n",
+       " <Record long name:Arsenic trioxide [1327-53-3]>]"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "restricted_substances = db.get_table('Restricted Substances', unit_system='UK Imperial', absolute_temperatures=False)\n",
+    "SVHC_criterion = restricted_substances.attributes['SVHC criterion']\n",
+    "\n",
+    "svhc_exists = SVHC_criterion.search_criterion(exists=True)\n",
+    "svhc_materials = restricted_substances.search_for_records_where([svhc_exists])\n",
+    "svhc_materials"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Searching for tabular data\n",
+    "Searching tabular data works in exactly the same way as searching attributes, except the criteria require an additional argument to specify the applicable column. This example finds all records in the *MaterialUniverse* table that contain at least one tabular row, and where both the following are true:\n",
+    "\n",
+    "* The 'Substance name' column contains the text value 'Alkanes'\n",
+    "* The 'Amount' column contains a value greater than 10.0"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:19.501941Z",
+     "iopub.status.busy": "2022-05-10T21:32:19.501941Z",
+     "iopub.status.idle": "2022-05-10T21:32:20.172142Z",
+     "shell.execute_reply": "2022-05-10T21:32:20.172142Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[<Record long name:PVC-elastomer (Shore A35)>,\n",
+       " <Record long name:PVC-elastomer (Shore A75, flame retarded)>,\n",
+       " <Record long name:PVC-elastomer (Shore A55)>,\n",
+       " <Record long name:PVC-elastomer (Shore A75)>]"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "declaration = material_universe.attributes['Restricted substances that may be associated with this material']\n",
+    "\n",
+    "substance_contains_alkanes = declaration.search_criterion(contains='Alkanes', in_column='Substance name')\n",
+    "amount_gt_10 = declaration.search_criterion(greater_than=10.0, in_column='Amount')\n",
+    "\n",
+    "affected_materials = restricted_substances.search_for_records_where([substance_contains_alkanes, amount_gt_10])\n",
+    "affected_materials"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Print the results of the tabular search."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:20.172142Z",
+     "iopub.status.busy": "2022-05-10T21:32:20.172142Z",
+     "iopub.status.idle": "2022-05-10T21:32:20.182139Z",
+     "shell.execute_reply": "2022-05-10T21:32:20.182139Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                      Record Name                       |                       Short Name                       \n",
+      "-----------------------------------------------------------------------------------------------------------------\n",
+      "               PVC-elastomer (Shore A35)                |                        Shore A35                       \n",
+      "       PVC-elastomer (Shore A75, flame retarded)        |                Shore A75, flame retarded               \n",
+      "               PVC-elastomer (Shore A55)                |                        Shore A55                       \n",
+      "               PVC-elastomer (Shore A75)                |                        Shore A75                       \n"
+     ]
+    }
+   ],
+   "source": [
+    "print('{:^55.55} | {:^55.55}'.format('Record Name', 'Short Name'))\n",
+    "print('-'*113)\n",
+    "for r in affected_materials:\n",
+    "    print('{:^55.55} | {:^55.55}'.format(str(r.name), r.short_name))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Searching with pseudoattributes\n",
+    "Some pseudoattributes can be used as search criteria, they behave as ordinary attributes and permit the same criteria to be used. By default they are not limited to a single table. This example searches for tensile test results for **MTS** samples (High Alloy Steels) that were last modified in the 24 hours before the 29th of April 2021 at 10:43."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:20.182139Z",
+     "iopub.status.busy": "2022-05-10T21:32:20.182139Z",
+     "iopub.status.idle": "2022-05-10T21:32:21.468700Z",
+     "shell.execute_reply": "2022-05-10T21:32:21.468700Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                      Record Name                       |                   Last Modified Date                   \n",
+      "-----------------------------------------------------------------------------------------------------------------\n",
+      "                      MTS-615772                        |                   2021/04/28 09:44:02                  \n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                      MTS-615732                        |                   2021/04/28 09:44:39                  \n",
+      "                      MTS-615742                        |                   2021/04/28 09:44:31                  \n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                      MTS-615752                        |                   2021/04/28 09:44:22                  \n",
+      "                      MTS-615762                        |                   2021/04/28 09:44:13                  \n"
+     ]
+    }
+   ],
+   "source": [
+    "tensile_test_table = db.get_table(\"Tensile Test Data\")\n",
+    "\n",
+    "name_criterion = mpy.SearchCriterion(mpy.PseudoAttributeDefinition(\"name\"), \"CONTAINS\", \"MTS\")\n",
+    "\n",
+    "start_datetime = datetime.datetime(year=2021, month=4, day=28, hour=9, minute=44)\n",
+    "end_datetime = datetime.datetime(year=2021, month=4, day=29, hour=9, minute=43)\n",
+    "modified_criterion = mpy.SearchCriterion(\n",
+    "    mpy.PseudoAttributeDefinition(\"modifiedDate\"), \"BETWEEN\", (start_datetime, end_datetime)\n",
+    ")\n",
+    "\n",
+    "modified_records = tensile_test_table.search_for_records_where([name_criterion, modified_criterion])\n",
+    "\n",
+    "print('{:^55.55} | {:^55.55}'.format('Record Name', 'Last Modified Date'))\n",
+    "print('-'*113)\n",
+    "for r in modified_records:\n",
+    "    print('{:^55.55} | {:^55.55}'.format(\n",
+    "        str(r.name), r.pseudo_attributes[\"modifiedDate\"].value.strftime(\"%Y/%m/%d %H:%M:%S\")))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If your search matches records on more than one table then all will be returned. If you need to limit your search to a single table then you will need to modify the **PseudoAttributeDefinition** to include a **PartialTableReference** within the **SearchCriterion**. The next example searches for all records in the **Material Universe** table modified in 2021."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T21:32:21.468700Z",
+     "iopub.status.busy": "2022-05-10T21:32:21.468700Z",
+     "iopub.status.idle": "2022-05-10T21:32:22.221800Z",
+     "shell.execute_reply": "2022-05-10T21:32:22.221800Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                      Record Name                       |                   Last Modified Date                   \n",
+      "-----------------------------------------------------------------------------------------------------------------\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                       Carbides                         |                   2021/06/18 11:46:25                  \n",
+      "                  Technical Ceramics                    |                   2021/06/18 11:45:59                  \n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                   Tungsten carbide                     |                   2021/07/19 15:26:03                  \n"
+     ]
+    }
+   ],
+   "source": [
+    "import GRANTA_MIScriptingToolkit as gdl\n",
+    "\n",
+    "partial_table_reference = gdl.PartialTableReference(tableName=\"MaterialUniverse\")\n",
+    "\n",
+    "start_datetime = datetime.datetime(year=2021, month=1, day=1, hour=0, minute=0)\n",
+    "end_datetime = datetime.datetime(year=2021, month=12, day=31, hour=23, minute=59)\n",
+    "\n",
+    "modified_criterion = mpy.SearchCriterion(mpy.PseudoAttributeDefinition(\"modifiedDate\"), \"BETWEEN\", (start_datetime, end_datetime))\n",
+    "modified_criterion.attribute._attribute_ref.partialTableReference = partial_table_reference\n",
+    "\n",
+    "modified_records = tensile_test_table.search_for_records_where([modified_criterion])\n",
+    "\n",
+    "print('{:^55.55} | {:^55.55}'.format('Record Name', 'Last Modified Date'))\n",
+    "print('-'*113)\n",
+    "for r in modified_records:\n",
+    "    print('{:^55.55} | {:^55.55}'.format(str(r.name), r.pseudo_attributes[\"modifiedDate\"].value.strftime(\"%Y/%m/%d %H:%M:%S\")))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

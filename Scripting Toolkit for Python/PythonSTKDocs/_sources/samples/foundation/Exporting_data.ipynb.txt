@@ -1,0 +1,784 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Exporting data\n",
+    "\n",
+    "Export the values of Ultimate tensile strength, Modulus, Baseline fiber volume, and Poisson's ratio for a set of records from the MI Training database.\n",
+    "\n",
+    "This example demonstrates:\n",
+    "\n",
+    "* Retrieving a list of databases from a Granta MI server\n",
+    "* Browsing the tables of a Granta MI database\n",
+    "* Searching a Granta MI database using the *CriteriaSearch* operation\n",
+    "* Retrieving values for attributes of a record\n",
+    "\n",
+    "## Create a Granta MI Session\n",
+    "\n",
+    "Import the GRANTA_MIScriptingToolkit package, and create a connection to a Granta MI server."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:34.568010Z",
+     "iopub.status.busy": "2022-05-10T22:22:34.567012Z",
+     "iopub.status.idle": "2022-05-10T22:22:35.079214Z",
+     "shell.execute_reply": "2022-05-10T22:22:35.079214Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import GRANTA_MIScriptingToolkit as gdl\n",
+    "\n",
+    "session = gdl.GRANTA_MISession('http://localhost/mi_servicelayer', autoLogon=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Get the Databases\n",
+    "\n",
+    "Access the browse service from the session and execute the *GetDatabases* method."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:35.082214Z",
+     "iopub.status.busy": "2022-05-10T22:22:35.082214Z",
+     "iopub.status.idle": "2022-05-10T22:22:35.638214Z",
+     "shell.execute_reply": "2022-05-10T22:22:35.638214Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 1 databases on the Granta MI Server\n",
+      "Database key: MI_Training, Database name: MI Training\n"
+     ]
+    }
+   ],
+   "source": [
+    "browseService = session.browseService\n",
+    "databases = browseService.GetDatabases().databases\n",
+    "\n",
+    "print(\"Found {0} databases on the Granta MI Server\".format(len(databases)))\n",
+    "for d in databases:\n",
+    "    print(\"Database key: {0.DBKey}, Database name: {0.name}\".format(d))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Use pandas to display the available databases."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:35.649214Z",
+     "iopub.status.busy": "2022-05-10T22:22:35.649214Z",
+     "iopub.status.idle": "2022-05-10T22:22:35.954214Z",
+     "shell.execute_reply": "2022-05-10T22:22:35.954214Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>DBKey</th>\n",
+       "      <th>DBName</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>MI_Training</td>\n",
+       "      <td>MI Training</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                    DBKey                 DBName\n",
+       "0             MI_Training            MI Training"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "df = pd.DataFrame({'DBKey': [db.DBKey for db in databases],\n",
+    "                  'DBName': [db.name for db in databases]})\n",
+    "df"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Get the tables in a database\n",
+    "\n",
+    "Use the *GetTables* method from the browse service to see what tables are available in the MI Training database."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:35.957216Z",
+     "iopub.status.busy": "2022-05-10T22:22:35.956215Z",
+     "iopub.status.idle": "2022-05-10T22:22:39.120077Z",
+     "shell.execute_reply": "2022-05-10T22:22:39.120077Z"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Found 20 tables in database MI_Training\n",
+      "Table name: MaterialUniverse\n",
+      "Table name: ProcessUniverse\n",
+      "Table name: Restricted Substances\n",
+      "Table name: Legislations and Lists\n",
+      "Table name: Design Data\n",
+      "Table name: Composite Design Data\n",
+      "Table name: Tensile Statistical Data\n",
+      "Table name: Tensile Test Data\n",
+      "Table name: Shear Test Data\n",
+      "Table name: Fatigue Statistical Data\n",
+      "Table name: Fatigue Test Data\n",
+      "Table name: Specification Values\n",
+      "Table name: Metals Pedigree\n",
+      "Table name: Composite Pedigree\n",
+      "Table name: AM Builds\n",
+      "Table name: Machine learning: Test data\n",
+      "Table name: Machine learning: Builds\n",
+      "Table name: Training Exercise (completed)\n",
+      "Table name: Training Exercise for Import\n",
+      "Table name: Files for Training\n"
+     ]
+    }
+   ],
+   "source": [
+    "dbKey = \"MI_Training\"\n",
+    "\n",
+    "tables = browseService.GetTables(gdl.GetTables(DBKey=dbKey)).tableDetails\n",
+    "\n",
+    "print(\"Found {0} tables in database {1}\".format(len(tables), dbKey))\n",
+    "for t in tables:\n",
+    "    print(\"Table name: {0}\".format(t.tableReference.name))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Searching a database\n",
+    "\n",
+    "Search MI Training for all records in the Tensile Test Data table which have a defined *Young's modulus (11-axis) (normalized)*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:39.123074Z",
+     "iopub.status.busy": "2022-05-10T22:22:39.123074Z",
+     "iopub.status.idle": "2022-05-10T22:22:40.496750Z",
+     "shell.execute_reply": "2022-05-10T22:22:40.496750Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "table = 'Tensile Test Data'\n",
+    "attribute = \"Young's modulus (11-axis) (normalized)\"\n",
+    "\n",
+    "tableRef = gdl.PartialTableReference(tableName=table)\n",
+    "attrRef = gdl.AttributeReference(name=attribute, DBKey=dbKey, partialTableReference=tableRef)\n",
+    "searchCriterion = gdl.RecordSearchCriterion(searchAttribute=attrRef, existsSearchValue=gdl.ExistsSearchValue())\n",
+    "request = gdl.CriteriaSearch(DBKey=dbKey, searchCriteria=[searchCriterion])\n",
+    "\n",
+    "searchResults = session.searchService.CriteriaSearch(request).searchResults"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Print the *shortName* and *longName* of each of the records returned by the search."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:40.500754Z",
+     "iopub.status.busy": "2022-05-10T22:22:40.500754Z",
+     "iopub.status.idle": "2022-05-10T22:22:40.512752Z",
+     "shell.execute_reply": "2022-05-10T22:22:40.512752Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>ShortName</th>\n",
+       "      <th>LongName</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>LBJ6213A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>LBJ4211A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>LBJ4213A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>LBJ1311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>LBJ1312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>LBJ8311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>LBJ6214A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>LBJ5313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>LBJ4212A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>LBJ1313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>LBJ8312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>LBJ8313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>LBJ6212A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>LBJ5311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>LBJ5312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   ShortName                                           LongName\n",
+       "0   LBJ6213A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "1   LBJ4211A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "2   LBJ4213A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "3   LBJ1311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "4   LBJ1312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "5   LBJ8311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "6   LBJ6214A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "7   LBJ5313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "8   LBJ4212A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "9   LBJ1313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "10  LBJ8312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "11  LBJ8313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "12  LBJ6212A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "13  LBJ5311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...\n",
+       "14  LBJ5312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec..."
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df2 = pd.DataFrame({'ShortName': [r.shortName for r in searchResults],\n",
+    "                     'LongName': [r.longName  for r in searchResults]})\n",
+    "df2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Export data from records\n",
+    "\n",
+    "Create attribute references for the attributes you want to export and export data from all records."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:40.515750Z",
+     "iopub.status.busy": "2022-05-10T22:22:40.515750Z",
+     "iopub.status.idle": "2022-05-10T22:22:40.992919Z",
+     "shell.execute_reply": "2022-05-10T22:22:40.992919Z"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "attributes = [\"Young's Modulus (11-axis) (normalized)\", \"Ultimate tensile strength (normalized)\",\n",
+    "\t\t\t  \"Baseline fiber volume\", \"Elastic Poisson's Ratio (12-plane)\"]\n",
+    "\n",
+    "attrRefs = [gdl.AttributeReference(name=a, DBKey=dbKey, partialTableReference=tableRef) for a in attributes]\n",
+    "recordRefs = [r.recordReference for r in searchResults]\n",
+    "request = gdl.GetRecordAttributesByRefRequest(recordReferences=recordRefs, attributeReferences=attrRefs)\n",
+    "       \n",
+    "recordData = session.dataExportService.GetRecordAttributesByRef(request).recordData"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Print the values of the attributes from the exported records. Note that some records may not have values for all attributes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:40.995922Z",
+     "iopub.status.busy": "2022-05-10T22:22:40.995922Z",
+     "iopub.status.idle": "2022-05-10T22:22:41.024919Z",
+     "shell.execute_reply": "2022-05-10T22:22:41.024919Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>ShortName</th>\n",
+       "      <th>LongName</th>\n",
+       "      <th>Young's Modulus (11-axis) (normalized)</th>\n",
+       "      <th>Ultimate tensile strength (normalized)</th>\n",
+       "      <th>Baseline fiber volume</th>\n",
+       "      <th>Elastic Poisson's Ratio (12-plane)</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>LBJ6213A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>47.911673</td>\n",
+       "      <td>1392.975515</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.266</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>LBJ4211A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>48.028883</td>\n",
+       "      <td>1535.152318</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.242</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>LBJ4213A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>48.042673</td>\n",
+       "      <td>1601.486784</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.259</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>LBJ1311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>47.118775</td>\n",
+       "      <td>1566.964731</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.272</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>LBJ1312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>47.828935</td>\n",
+       "      <td>1557.622334</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.252</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>LBJ8311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>48.428779</td>\n",
+       "      <td>1556.643278</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.272</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>LBJ6214A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>46.387931</td>\n",
+       "      <td>1322.511090</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.264</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>LBJ5313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>47.249776</td>\n",
+       "      <td>1490.005443</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.253</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>LBJ4212A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>45.774298</td>\n",
+       "      <td>1580.774931</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.306</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>LBJ1313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>44.236767</td>\n",
+       "      <td>1505.711702</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.264</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>LBJ8312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>49.276835</td>\n",
+       "      <td>1559.477024</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.258</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>LBJ8313A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>47.966831</td>\n",
+       "      <td>1571.811746</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.251</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>LBJ6212A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>49.076887</td>\n",
+       "      <td>1379.806528</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.270</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>LBJ5311A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>48.725254</td>\n",
+       "      <td>1559.456339</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.254</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>LBJ5312A</td>\n",
+       "      <td>S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...</td>\n",
+       "      <td>48.835570</td>\n",
+       "      <td>1483.241686</td>\n",
+       "      <td>53.473</td>\n",
+       "      <td>0.272</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   ShortName                                           LongName  \\\n",
+       "0   LBJ6213A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "1   LBJ4211A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "2   LBJ4213A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "3   LBJ1311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "4   LBJ1312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "5   LBJ8311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "6   LBJ6214A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "7   LBJ5313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "8   LBJ4212A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "9   LBJ1313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "10  LBJ8312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "11  LBJ8313A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "12  LBJ6212A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "13  LBJ5311A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "14  LBJ5312A  S-Glass Unitape S2/SP381, 3M, 0° tension, Spec...   \n",
+       "\n",
+       "    Young's Modulus (11-axis) (normalized)  \\\n",
+       "0                                47.911673   \n",
+       "1                                48.028883   \n",
+       "2                                48.042673   \n",
+       "3                                47.118775   \n",
+       "4                                47.828935   \n",
+       "5                                48.428779   \n",
+       "6                                46.387931   \n",
+       "7                                47.249776   \n",
+       "8                                45.774298   \n",
+       "9                                44.236767   \n",
+       "10                               49.276835   \n",
+       "11                               47.966831   \n",
+       "12                               49.076887   \n",
+       "13                               48.725254   \n",
+       "14                               48.835570   \n",
+       "\n",
+       "    Ultimate tensile strength (normalized)  Baseline fiber volume  \\\n",
+       "0                              1392.975515                 53.473   \n",
+       "1                              1535.152318                 53.473   \n",
+       "2                              1601.486784                 53.473   \n",
+       "3                              1566.964731                 53.473   \n",
+       "4                              1557.622334                 53.473   \n",
+       "5                              1556.643278                 53.473   \n",
+       "6                              1322.511090                 53.473   \n",
+       "7                              1490.005443                 53.473   \n",
+       "8                              1580.774931                 53.473   \n",
+       "9                              1505.711702                 53.473   \n",
+       "10                             1559.477024                 53.473   \n",
+       "11                             1571.811746                 53.473   \n",
+       "12                             1379.806528                 53.473   \n",
+       "13                             1559.456339                 53.473   \n",
+       "14                             1483.241686                 53.473   \n",
+       "\n",
+       "    Elastic Poisson's Ratio (12-plane)  \n",
+       "0                                0.266  \n",
+       "1                                0.242  \n",
+       "2                                0.259  \n",
+       "3                                0.272  \n",
+       "4                                0.252  \n",
+       "5                                0.272  \n",
+       "6                                0.264  \n",
+       "7                                0.253  \n",
+       "8                                0.306  \n",
+       "9                                0.264  \n",
+       "10                               0.258  \n",
+       "11                               0.251  \n",
+       "12                               0.270  \n",
+       "13                               0.254  \n",
+       "14                               0.272  "
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "s = [None]*len(df2)\n",
+    "for attribute in attributes:\n",
+    "    for idx, record in enumerate(recordData):\n",
+    "        attrValue = next((x for x in record.attributeValues if x.attributeName == attribute), None)\n",
+    "        s[idx] = attrValue.pointDataType.points[0].value if attrValue else None\n",
+    "    df2[attribute] = s\n",
+    "    \n",
+    "df2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Create a plot of the exported values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2022-05-10T22:22:41.027922Z",
+     "iopub.status.busy": "2022-05-10T22:22:41.027922Z",
+     "iopub.status.idle": "2022-05-10T22:22:42.073921Z",
+     "shell.execute_reply": "2022-05-10T22:22:42.073921Z"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<AxesSubplot:xlabel='Ultimate tensile strength (normalized)', ylabel=\"Young's Modulus (11-axis) (normalized)\">"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 720x504 with 2 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import matplotlib\n",
+    "\n",
+    "df2.plot.scatter(x=\"Ultimate tensile strength (normalized)\", y=\"Young's Modulus (11-axis) (normalized)\", loglog=False,\n",
+    "\t\t\t\t c=\"Elastic Poisson's Ratio (12-plane)\", colormap=\"afmhot\", norm=matplotlib.colors.LogNorm(),\n",
+    "                 grid=True, figsize=(10, 7))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "anaconda-cloud": {},
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}
